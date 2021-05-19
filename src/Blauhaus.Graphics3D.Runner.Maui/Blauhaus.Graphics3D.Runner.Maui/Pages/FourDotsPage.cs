@@ -37,15 +37,8 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 new Vector4(1, -1, -2, 1)   //botth right of screen, near distance
             };
 
-            var worldCoordinateSystem = Matrix4x4.Identity;
-            var viewCoordinateSystem = Matrix4x4.CreateLookAt(new Vector3(0, 0, -5), Vector3.Zero, Vector3.UnitY);
-            var projectionCoordinateSystem = Matrix4x4.CreatePerspectiveFieldOfView((float) (Math.PI / 4f), info.Width / (float)info.Height, 0.01f, 10f);
-
-            var camera = new Camera(info.Width, info.Height);
-
-            var worldToView = Matrix4x4.Multiply(worldCoordinateSystem, viewCoordinateSystem);
-            var viewToProjection = Matrix4x4.Multiply(worldToView, projectionCoordinateSystem);
-            var viewToProjectionCanvas = ConvertToScreen(pointsToShow, camera.ScreenMatrix, info.Width, info.Height);
+            var camera = new Camera(info.Width, info.Height, new Vector3(0, 0, -5), Vector3.UnitY);
+            var viewToProjectionCanvas = camera.GetScreenCoordinates(pointsToShow);
 
             var paint = new SKPaint
             {
@@ -56,33 +49,18 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 
             for (var i = 0; i < viewToProjectionCanvas.Count(); i++)
             {
-
                 paint.Color = Colors[i];
                 canvas.DrawCircle(viewToProjectionCanvas[i].X, viewToProjectionCanvas[i].Y, 10, paint);
             } 
         }
 
-        private static readonly SKColor[] Colors = new[]
+        private static readonly SKColor[] Colors = 
         {
             Color.Red.ToSKColor(),
             Color.Green.ToSKColor(),
             Color.Blue.ToSKColor(),
             Color.Yellow.ToSKColor(),
         };
-
-        private static IReadOnlyList<Vector2> ConvertToScreen(IReadOnlyList<Vector4> points, Matrix4x4 matrix, float width, float height)
-        {
-            var canvasCoordinates = new Vector2[points.Count];
-            for (var i = 0; i < points.Count; i++)
-            {
-
-                var pointInCameraSpace = Vector4.Transform(points[i], matrix); 
-                var screenX = pointInCameraSpace.X / -pointInCameraSpace.Z * width/2f + width/2f;
-                var screenY = pointInCameraSpace.Y / -pointInCameraSpace.Z * height/2f + height/2f;
-                canvasCoordinates[i] = new Vector2(screenX, screenY);
-            }
-
-            return canvasCoordinates;
-        }
+         
     }
 }

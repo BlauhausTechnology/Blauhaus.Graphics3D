@@ -27,13 +27,14 @@ namespace Blauhaus.Graphics3D.Runner.Maui
                 
             services
                 .AddPage<MainPage, MainViewModel>()
+                .AddPage<PryamidPage, PyramidViewModel>()
                 .AddPage<FourDotsPage, FourDotsViewModel>();
         }
         
         protected override void HandleAppStarting()
         {
             base.HandleAppStarting();
-            MainPage = AppServiceLocator.Resolve<FourDotsPage>();
+            MainPage = AppServiceLocator.Resolve<PryamidPage>();
         }
 
         protected override IBuildConfig GetBuildConfig()
