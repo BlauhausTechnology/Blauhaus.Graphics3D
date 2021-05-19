@@ -11,15 +11,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <Compile Include="Pages\.Base\BaseGraphics3DPage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blauhaus.Analytics.Console" Version="1.6.10" />
+    <PackageReference Include="Blauhaus.DeviceServices" Version="1.0.1" />
+    <PackageReference Include="Blauhaus.MVVM.Xamarin" Version="1.3.9" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Blauhaus.Graphics3d.ViewModels\Blauhaus.Graphics3d.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="MauiApp.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
-    <Compile Update="MainPage.cs">
+    <Compile Update="Pages\MainPage.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
   </ItemGroup>

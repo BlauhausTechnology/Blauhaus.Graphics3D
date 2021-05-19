@@ -1,4 +1,5 @@
-﻿using Blauhaus.Graphics3D.Runner.Maui;
+﻿using Blauhaus.DeviceServices.UWP.Ioc;
+using Blauhaus.Graphics3D.Runner.Maui;
 
 namespace Blauhaus.Graphics3D.UWP
 {
@@ -8,7 +9,7 @@ namespace Blauhaus.Graphics3D.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new MauiApp());
+            LoadApplication(new MauiApp(new UwpServices()));
         }
     }
 }
