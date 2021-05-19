@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphics3D.Runner.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphics3D.Runner.Maui", "Blauhaus.Graphics3D.Runner.Maui\Blauhaus.Graphics3D.Runner.Maui\Blauhaus.Graphics3D.Runner.Maui.csproj", "{878D42A9-73EA-43B6-ABF4-94C94B28D980}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runner.Maui", "Runner.Maui", "{BC26C9C1-B8E7-4FD1-AB09-A29B886652F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7B59CB6D-2603-47C0-92CC-F64C8F9DFADD} = {BC26C9C1-B8E7-4FD1-AB09-A29B886652F6}
+		{878D42A9-73EA-43B6-ABF4-94C94B28D980} = {BC26C9C1-B8E7-4FD1-AB09-A29B886652F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EBDDC1C-7069-4A94-B382-CBC7FA954B25}
