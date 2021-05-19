@@ -23,14 +23,17 @@ namespace Blauhaus.Graphics3D.Runner.Maui
             services
                 .AddMvvmServices()
                 .AddDeviceServices()
-                .RegisterConsoleLoggerClientService()
-                .AddPage<MainPage, MainViewModel>();
+                .RegisterConsoleLoggerClientService();
+                
+            services
+                .AddPage<MainPage, MainViewModel>()
+                .AddPage<FourDotsPage, FourDotsViewModel>();
         }
         
         protected override void HandleAppStarting()
         {
             base.HandleAppStarting();
-            MainPage = AppServiceLocator.Resolve<MainPage>();
+            MainPage = AppServiceLocator.Resolve<FourDotsPage>();
         }
 
         protected override IBuildConfig GetBuildConfig()

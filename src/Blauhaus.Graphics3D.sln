@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphics3D.Runner.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runner.Maui", "Runner.Maui", "{BC26C9C1-B8E7-4FD1-AB09-A29B886652F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphics3D", "Blauhaus.Graphics3D\Blauhaus.Graphics3D.csproj", "{52820A03-70BB-4FEE-9FF6-A52CCCD60303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphics3D", "Blauhaus.Graphics3D\Blauhaus.Graphics3D.csproj", "{52820A03-70BB-4FEE-9FF6-A52CCCD60303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphics3d.ViewModels", "Blauhaus.Graphics3d.ViewModels\Blauhaus.Graphics3d.ViewModels.csproj", "{7A3427E0-2ED0-4DC0-AEBF-C12AE7235F48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphics3D.ViewModels", "Blauhaus.Graphics3d.ViewModels\Blauhaus.Graphics3D.ViewModels.csproj", "{7A3427E0-2ED0-4DC0-AEBF-C12AE7235F48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
