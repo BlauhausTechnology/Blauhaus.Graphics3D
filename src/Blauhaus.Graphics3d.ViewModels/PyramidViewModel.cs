@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Numerics;
 using Blauhaus.Graphics3D;
 using Blauhaus.MVVM.Abstractions.ViewModels;
@@ -37,13 +38,22 @@ namespace Blauhaus.Graphics3d.ViewModels
                 //left face
                 0, 2, 4
             };
+            
 
-            Camera = new Camera(1, 1, new Vector3(-10, 0, 0), Vector3.Zero, Vector3.UnitZ);
+            Camera = new Camera(1, 1, new Vector3(10, 0, 0), Vector3.Zero, Vector3.UnitZ);
             ScreenPoints = Array.Empty<Vector2>();
+            
+            LookAtX = 0;
+            LookAtY = 0;
+            LookAtZ = 0;
+
+            PositionX = 10;
+            PositionY = 0;
+            PositionZ = 0;
         }
 
         private Camera Camera { get; }
-
+        
         public Vector2 ScreenDimensions
         {
             set
@@ -52,9 +62,92 @@ namespace Blauhaus.Graphics3d.ViewModels
                 ScreenPoints = Camera.GetScreenCoordinates(_worldVertices);
             }
         }
+        
+        public Vector2[] ScreenPoints
+        {
+            get => GetProperty<Vector2[]>();
+            private set => SetProperty(value);
+        }
 
-
-        public Vector2[] ScreenPoints { get; private set; }
         public int[] Indices { get; }
+
+
+        public float LookAtX
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdateLookAt);
+        }
+        
+        public float LookAtY
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdateLookAt);
+        }
+        
+        public float LookAtZ
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdateLookAt);
+        }
+
+
+        public float PositionX
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdatePosition);
+        }
+        
+        public float PositionY
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdatePosition);
+        }
+        
+        public float PositionZ
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdatePosition);
+        }
+
+        
+        public float Yaw
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdateRotation);
+        }
+        public float Pitch
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdateRotation);
+        }
+        public float Roll
+        {
+            get => GetProperty<float>();
+            set => SetProperty(value, UpdateRotation);
+        }
+
+        private void UpdateRotation()
+        {
+            Camera.Pitch = Pitch;
+            Camera.Yaw = Yaw;
+            Camera.Roll = Roll;
+            
+            ScreenPoints = Camera.GetScreenCoordinates(_worldVertices);
+        }
+
+
+        private void UpdateLookAt()
+        {
+            Camera.SetLookAt(new Vector3(LookAtX, LookAtY, LookAtZ));
+            ScreenPoints = Camera.GetScreenCoordinates(_worldVertices);
+        }
+
+        private void UpdatePosition()
+        {
+            Camera.Position = new Vector3(PositionX, PositionY, PositionZ);
+            ScreenPoints = Camera.GetScreenCoordinates(_worldVertices);
+        }
+
+
     }
 }

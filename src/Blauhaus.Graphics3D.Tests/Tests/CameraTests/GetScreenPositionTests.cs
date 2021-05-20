@@ -16,10 +16,11 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests
         
         private static void VerifyOnScreen(Vector2 screenPosition)
         {
-            Assert.That(screenPosition, Is.GreaterThan(LeftX));
-            Assert.That(screenPosition, Is.GreaterThan(TopY));
-            Assert.That(screenPosition, Is.LessThan(BottomY));
-            Assert.That(screenPosition, Is.LessThan(RightX));
+            Assert.That(screenPosition.X, Is.GreaterThan(LeftX));
+            Assert.That(screenPosition.X, Is.LessThan(RightX));
+            
+            Assert.That(screenPosition.Y, Is.GreaterThan(TopY));
+            Assert.That(screenPosition.Y, Is.LessThan(BottomY));
 
         }
 
@@ -34,7 +35,7 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests
             }
 
             [Test]
-            public void WHEN_Vector_is_ZERO_SHOULD_return_screen_midpoint()
+            public void WHEN_Vector_is_ZERO()
             {
                 //Act
                 var result = Sut.GetScreenPosition(Vector3.Zero);
@@ -46,43 +47,40 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests
             }
 
             [Test]
-            public void WHEN_Vector_is_right_of_origin_SHOULD_return_X_to_the_right()
+            public void WHEN_Vector_is_right_of_origin()
             {
                 //Act
                 var result = Sut.GetScreenPosition(new Vector3(0, 1, 0));
 
                 //Assert
                 Assert.That(result.X, Is.GreaterThan(MidX));
-                Assert.That(result.X, Is.LessThan(RightX));
-                Assert.That(result.Y, Is.EqualTo(MidY));
+                VerifyOnScreen(result);
             }
 
             [Test]
-            public void WHEN_Vector_is_left_of_origin_SHOULD_return_X_to_the_left()
+            public void WHEN_Vector_is_left_of_origin()
             {
                 //Act
                 var result = Sut.GetScreenPosition(new Vector3(0, -1, 0));
 
                 //Assert
                 Assert.That(result.X, Is.LessThan(MidX));
-                Assert.That(result.X, Is.GreaterThan(LeftX));
-                Assert.That(result.Y, Is.EqualTo(MidY));
+                VerifyOnScreen(result);
             }
 
             [Test]
-            public void WHEN_Vector_is_above_origin_SHOULD_return_Y_above()
+            public void WHEN_Vector_is_above_origin()
             {
                 //Act
                 var result = Sut.GetScreenPosition(new Vector3(0, 0, 1));
 
                 //Assert
-                Assert.That(result.X, Is.EqualTo(MidX));
                 Assert.That(result.Y, Is.LessThan(MidY));
-                Assert.That(result.Y, Is.GreaterThan(TopY));
+                VerifyOnScreen(result);
             }
 
             [Test]
-            public void WHEN_Vector_is_below_origin_SHOULD_return_Y_below_mid()
+            public void WHEN_Vector_is_below_origin()
             {
                 //Act
                 var result = Sut.GetScreenPosition(new Vector3(0, 0, -1));
@@ -100,10 +98,45 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests
                 var result = Sut.GetScreenPosition(new Vector3(0, 1, 1));
 
                 //Assert
-                Assert.That(result.X, Is.GreaterThan(MidX));
-                Assert.That(result.X, Is.LessThan(RightX));
+                Assert.That(result.X, Is.GreaterThan(MidX)); 
                 Assert.That(result.Y, Is.LessThan(MidY));
-                Assert.That(result.Y, Is.LessThan(TopY));
+                VerifyOnScreen(result);
+            }
+            
+            [Test]
+            public void WHEN_Vector_is_ToLeft()
+            {
+                //Act
+                var result = Sut.GetScreenPosition(new Vector3(0, -1, 1));
+
+                //Assert
+                Assert.That(result.X, Is.LessThan(MidX)); 
+                Assert.That(result.Y, Is.LessThan(MidY));
+                VerifyOnScreen(result);
+            }
+
+            [Test]
+            public void WHEN_Vector_is_BottomLeft()
+            {
+                //Act
+                var result = Sut.GetScreenPosition(new Vector3(0, -1, -1));
+
+                //Assert
+                Assert.That(result.X, Is.LessThan(MidX)); 
+                Assert.That(result.Y, Is.GreaterThan(MidY));
+                VerifyOnScreen(result);
+            }
+            
+            [Test]
+            public void WHEN_Vector_is_BottomRight()
+            {
+                //Act
+                var result = Sut.GetScreenPosition(new Vector3(0, 1, -1));
+
+                //Assert
+                Assert.That(result.X, Is.GreaterThan(MidX)); 
+                Assert.That(result.Y, Is.GreaterThan(MidY));
+                VerifyOnScreen(result);
             }
         }
     }

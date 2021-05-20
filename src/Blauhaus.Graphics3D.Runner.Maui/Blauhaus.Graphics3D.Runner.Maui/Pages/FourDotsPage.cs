@@ -37,7 +37,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 new ( 1,  1, -2)   //botth right of screen, near distance
             };
 
-            var camera = new Camera(info.Width, info.Height, new Vector3(10, 0, 0), Vector3.Zero, Vector3.UnitZ);
+            var camera = new Camera(info.Width, info.Height, new Vector3(10, 0, 0), -Vector3.UnitX, Vector3.UnitZ);
             var viewToProjectionCanvas = camera.GetScreenCoordinates(pointsToShow);
 
             var paint = new SKPaint
