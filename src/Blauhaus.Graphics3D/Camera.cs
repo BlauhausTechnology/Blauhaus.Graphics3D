@@ -36,24 +36,11 @@ namespace Blauhaus.Graphics3D
             GenerateMatrices();
         }
 
-        private void GenerateMatrices()
+        public void SetDimensions(float width, float height)
         {
-            _worldMatrix = Matrix4x4.Identity;
-
-            _viewMatrix = Matrix4x4.CreateLookAt(
-                cameraPosition: _position, 
-                cameraTarget: _lookAtVector, 
-                cameraUpVector: _upVector);
-            
-            _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
-                fieldOfView: (float) (Math.PI / 4f), 
-                aspectRatio: _width/_height, 
-                nearPlaneDistance:_nearclip, 
-                farPlaneDistance: _farClip);
-
-            var worldViewMatrix = Matrix4x4.Multiply(_worldMatrix, _viewMatrix);
-
-            _screenMatrix = Matrix4x4.Multiply(worldViewMatrix, _projectionMatrix);
+            _width = width;
+            _height = height;
+            GenerateMatrices();
         }
 
         public Vector2 GetScreenPosition(Vector3 worldPosition)
@@ -75,6 +62,28 @@ namespace Blauhaus.Graphics3D
 
             return canvasCoordinates;
         }
+
+
+        private void GenerateMatrices()
+        {
+            _worldMatrix = Matrix4x4.Identity;
+
+            _viewMatrix = Matrix4x4.CreateLookAt(
+                cameraPosition: _position, 
+                cameraTarget: _lookAtVector, 
+                cameraUpVector: _upVector);
+            
+            _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
+                fieldOfView: (float) (Math.PI / 4f), 
+                aspectRatio: _width/_height, 
+                nearPlaneDistance:_nearclip, 
+                farPlaneDistance: _farClip);
+
+            var worldViewMatrix = Matrix4x4.Multiply(_worldMatrix, _viewMatrix);
+
+            _screenMatrix = Matrix4x4.Multiply(worldViewMatrix, _projectionMatrix);
+        }
+
          
 
     }

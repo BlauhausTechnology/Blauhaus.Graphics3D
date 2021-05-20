@@ -25,6 +25,8 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             var info = args.Info;
             var surface = args.Surface;
             var canvas = surface.Canvas;
+            ViewModel.ScreenDimensions = new Vector2(info.Width, info.Height);
+
             canvas.Clear();
              
             var paint = new SKPaint
@@ -34,16 +36,13 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 IsAntialias = true,
                 Color = Color.Green.ToSKColor()
             };
-
-            var camera = new Camera(info.Width, info.Height, new Vector3(-10, 0, 0), Vector3.Zero, Vector3.UnitZ);
-            var vectors = camera.GetScreenCoordinates(ViewModel.Vertices);
              
-            for (var i = 0; i < ViewModel.Indices.Length; i++)
+            for (var i = 0; i < ViewModel.Indices.Length/3; i++)
             {
                 using var trianglePath = new SKPath();
-                trianglePath.MoveTo(vectors[ViewModel.Indices[i * 3 + 0]].X, vectors[ViewModel.Indices[i * 3 + 0]].Y);
-                trianglePath.LineTo(vectors[ViewModel.Indices[i * 3 + 1]].X, vectors[ViewModel.Indices[i * 3 + 1]].Y);
-                trianglePath.LineTo(vectors[ViewModel.Indices[i * 3 + 2]].X, vectors[ViewModel.Indices[i * 3 + 2]].Y);
+                trianglePath.MoveTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 0]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 0]].Y);
+                trianglePath.LineTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 1]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 1]].Y);
+                trianglePath.LineTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 2]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 2]].Y);
                 trianglePath.Close();
                 canvas.DrawPath(trianglePath, paint);
             }
