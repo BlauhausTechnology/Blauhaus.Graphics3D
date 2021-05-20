@@ -29,15 +29,15 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             var canvas = surface.Canvas;
             canvas.Clear();
 
-            var pointsToShow = new[]
+            var pointsToShow = new Vector3[]
             {
-                new Vector4(0, 0, 0, 1),   //middle of screen, middle distance
-                new Vector4(2, 0, 0, 1),   //right of screen, middle distance
-                new Vector4(-1, 1, 2, 1),  //top left of screen, far distance
-                new Vector4(1, -1, -2, 1)   //botth right of screen, near distance
+                new (0, 0, 0),   //middle of screen, middle distance
+                new (2, 0, 0),   //right of screen, middle distance
+                new (-1, 1, 2),  //top left of screen, far distance
+                new (1, -1, -2)   //botth right of screen, near distance
             };
 
-            var camera = new Camera(info.Width, info.Height, new Vector3(0, 0, -5), Vector3.UnitY);
+            var camera = new Camera(info.Width, info.Height, new Vector3(0, 0, -5), Vector3.Zero, Vector3.UnitY);
             var viewToProjectionCanvas = camera.GetScreenCoordinates(pointsToShow);
 
             var paint = new SKPaint

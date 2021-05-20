@@ -6,43 +6,63 @@ namespace Blauhaus.Graphics3D
 {
     public class Camera
     {
+        private float _width;
+        private float _height;
+        private readonly Vector3 _position;
+        private readonly Vector3 _lookAtVector;
+        private readonly Vector3 _upVector;
 
+        private Matrix4x4 _worldMatrix;
+        private Matrix4x4 _viewMatrix;
+        private Matrix4x4 _projectionMatrix;
         private Matrix4x4? _screenMatrix;
-
-        public Camera(float width, float height, Vector3 position, Vector3 up)
+        private Matrix4x4 ScreenMatrix
         {
-            Width = width;
-            Height = height;
+            get
+            {
+                _screenMatrix ??= Matrix4x4.Multiply(Matrix4x4.Multiply(_worldMatrix, _viewMatrix), _projectionMatrix);
+                return _screenMatrix.Value;
+            }
+        }
 
-            WorldMatrix = Matrix4x4.Identity;
+        public Camera(float width, float height, Vector3 position, Vector3 lookAtVector, Vector3 upVector)
+        {
+            _width = width;
+            _height = height;
+            _position = position;
+            _lookAtVector = lookAtVector;
+            _upVector = upVector;
 
-            ViewMatrix = Matrix4x4.CreateLookAt(
+            _worldMatrix = Matrix4x4.Identity;
+
+            _viewMatrix = Matrix4x4.CreateLookAt(
                 cameraPosition: position, 
-                cameraTarget: Vector3.Zero, 
-                cameraUpVector: up);
+                cameraTarget: _lookAtVector, 
+                cameraUpVector: upVector);
             
-            ProjectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
+            _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
                 fieldOfView: (float) (Math.PI / 4f), 
                 aspectRatio: width/height, 
                 nearPlaneDistance: 0.01f, 
                 farPlaneDistance: 10f);
         }
 
-        public float Width { get; }
-        public float Height { get; }
-
-        public Matrix4x4 WorldMatrix { get; }
-        public Matrix4x4 ViewMatrix { get; }
-        public Matrix4x4 ProjectionMatrix { get; }
-
-        private Matrix4x4 ScreenMatrix
+        public Camera SetDimensions(float width, float height)
         {
-            get
-            {
-                _screenMatrix ??= Matrix4x4.Multiply(Matrix4x4.Multiply(WorldMatrix, ViewMatrix), ProjectionMatrix);
-                return _screenMatrix.Value;
-            }
+            _width = width;
+            _height = height;
+            
+            _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
+                fieldOfView: (float) (Math.PI / 4f), 
+                aspectRatio: width/height, 
+                nearPlaneDistance: 0.01f, 
+                farPlaneDistance: 10f);
+
+            _screenMatrix = null;
+            return this;
         }
+
+
         public Vector2[] GetScreenCoordinates(IReadOnlyList<Vector3> worldPoints)
         {
             var canvasCoordinates = new Vector2[worldPoints.Count];
@@ -50,27 +70,14 @@ namespace Blauhaus.Graphics3D
             {
                 var vec4 = new Vector4(worldPoints[i], 1);
                 var pointInCameraSpace = Vector4.Transform(vec4, ScreenMatrix); 
-                var screenX = pointInCameraSpace.X / -pointInCameraSpace.Z * Width/2f + Width/2f;
-                var screenY = pointInCameraSpace.Y / -pointInCameraSpace.Z * Height/2f + Height/2f;
+                var screenX = pointInCameraSpace.X / -pointInCameraSpace.Z * _width/2f + _width/2f;
+                var screenY = pointInCameraSpace.Y / -pointInCameraSpace.Z * _height/2f + _height/2f;
                 canvasCoordinates[i] = new Vector2(screenX, screenY);
             }
 
             return canvasCoordinates;
         }
-
-        public IReadOnlyList<Vector2> GetScreenCoordinates(IReadOnlyList<Vector4> worldPoints)
-        {
-            var canvasCoordinates = new Vector2[worldPoints.Count];
-            for (var i = 0; i < worldPoints.Count; i++)
-            {
-                var pointInCameraSpace = Vector4.Transform(worldPoints[i], ScreenMatrix); 
-                var screenX = pointInCameraSpace.X / -pointInCameraSpace.Z * Width/2f + Width/2f;
-                var screenY = pointInCameraSpace.Y / -pointInCameraSpace.Z * Height/2f + Height/2f;
-                canvasCoordinates[i] = new Vector2(screenX, screenY);
-            }
-
-            return canvasCoordinates;
-        }
+         
 
     }
 }

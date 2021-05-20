@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using Blauhaus.Graphics3D;
 using Blauhaus.MVVM.Abstractions.ViewModels;
 
 namespace Blauhaus.Graphics3d.ViewModels
@@ -33,6 +34,8 @@ namespace Blauhaus.Graphics3d.ViewModels
                 0, 2, 4
             };
         }
+
+        public Camera Camera { get; }
 
         public Vector3[] Vertices { get; }
         public ushort[] Indices { get; }
