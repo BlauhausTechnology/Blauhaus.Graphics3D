@@ -39,10 +39,7 @@ namespace Blauhaus.Graphics3D
         {
             get
             {
-                if (_screenMatrix == null)
-                {
-                    _screenMatrix = Matrix4x4.Multiply(Matrix4x4.Multiply(WorldMatrix, ViewMatrix), ProjectionMatrix);
-                }
+                _screenMatrix ??= Matrix4x4.Multiply(Matrix4x4.Multiply(WorldMatrix, ViewMatrix), ProjectionMatrix);
                 return _screenMatrix.Value;
             }
         }

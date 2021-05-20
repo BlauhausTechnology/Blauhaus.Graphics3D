@@ -12,7 +12,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
     {
         public PryamidPage(PyramidViewModel viewModel) : base(viewModel)
         {
-            BackgroundColor = Color.LightSlateGray;
+            BackgroundColor = Color.Black;
             
             var canvasView = new SKCanvasView();
             canvasView.PaintSurface += OnCanvasViewPaintSurface;
@@ -30,34 +30,24 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             var paint = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = Color.Red.ToSKColor(),
-                StrokeWidth = 1
+                StrokeWidth = 1,
+                IsAntialias = true,
+                Color = Color.Green.ToSKColor()
             };
 
             var camera = new Camera(info.Width, info.Height, new Vector3(-10, 0, 0), Vector3.UnitZ);
             var vectors = camera.GetScreenCoordinates(ViewModel.Vertices);
-            
-            var skVectors = new SKPoint[vectors.Length];
-            for (var i = 0; i < vectors.Length; i++)
+             
+            for (var i = 0; i < ViewModel.Indices.Length; i++)
             {
-                skVectors[i] = new SKPoint(vectors[i].X, vectors[i].Y);
+                using var trianglePath = new SKPath();
+                trianglePath.MoveTo(vectors[ViewModel.Indices[i * 3 + 0]].X, vectors[ViewModel.Indices[i * 3 + 0]].Y);
+                trianglePath.LineTo(vectors[ViewModel.Indices[i * 3 + 1]].X, vectors[ViewModel.Indices[i * 3 + 1]].Y);
+                trianglePath.LineTo(vectors[ViewModel.Indices[i * 3 + 2]].X, vectors[ViewModel.Indices[i * 3 + 2]].Y);
+                trianglePath.Close();
+                canvas.DrawPath(trianglePath, paint);
             }
 
-            canvas.DrawLine(skVectors[ViewModel.Indices[0]], skVectors[ViewModel.Indices[1]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[1]], skVectors[ViewModel.Indices[2]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[2]], skVectors[ViewModel.Indices[0]], paint);
-            
-            canvas.DrawLine(skVectors[ViewModel.Indices[3]], skVectors[ViewModel.Indices[4]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[4]], skVectors[ViewModel.Indices[5]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[5]], skVectors[ViewModel.Indices[3]], paint);
-            
-            canvas.DrawLine(skVectors[ViewModel.Indices[6]], skVectors[ViewModel.Indices[7]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[7]], skVectors[ViewModel.Indices[8]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[8]], skVectors[ViewModel.Indices[6]], paint);
-
-            canvas.DrawLine(skVectors[ViewModel.Indices[9]], skVectors[ViewModel.Indices[10]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[10]], skVectors[ViewModel.Indices[11]], paint);
-            canvas.DrawLine(skVectors[ViewModel.Indices[11]], skVectors[ViewModel.Indices[9]], paint);
         }
 
          
