@@ -66,9 +66,13 @@ namespace Blauhaus.Graphics3D
 
         private void GenerateMatrices()
         {
-            _worldMatrix = Matrix4x4.Identity;
+            _worldMatrix = new Matrix4x4(
+                1, 0, 0, 0,
+                0, -1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1);
 
-            _viewMatrix = Matrix4x4.CreateLookAt(
+                _viewMatrix = Matrix4x4.CreateLookAt(
                 cameraPosition: _position, 
                 cameraTarget: _lookAtVector, 
                 cameraUpVector: _upVector);
@@ -78,8 +82,9 @@ namespace Blauhaus.Graphics3D
                 aspectRatio: _width/_height, 
                 nearPlaneDistance:_nearclip, 
                 farPlaneDistance: _farClip);
+            
 
-            var worldViewMatrix = Matrix4x4.Multiply(_worldMatrix, _viewMatrix);
+            var worldViewMatrix = Matrix4x4.Multiply(_worldMatrix , _viewMatrix);
 
             _screenMatrix = Matrix4x4.Multiply(worldViewMatrix, _projectionMatrix);
         }

@@ -17,9 +17,9 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests.Base
         {
             base.Setup();
 
-            Width = 1200;
-            Height = 600;
-            Position = new Vector3(-10, 0, 0);
+            Width = 1000;
+            Height = 1000;
+            Position = new Vector3(10, 0, 0);
             LookAtVector = Vector3.Zero;
             UpVector = Vector3.UnitZ;
             NearClip = 0.01f;
