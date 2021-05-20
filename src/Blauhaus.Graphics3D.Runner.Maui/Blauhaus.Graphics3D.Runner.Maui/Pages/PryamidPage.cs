@@ -35,7 +35,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 Color = Color.Green.ToSKColor()
             };
 
-            var camera = new Camera(info.Width, info.Height, new Vector3(-10, 0, 0), Vector3.UnitZ);
+            var camera = new Camera(info.Width, info.Height, new Vector3(-10, 0, 0), Vector3.Zero, Vector3.UnitZ);
             var vectors = camera.GetScreenCoordinates(ViewModel.Vertices);
              
             for (var i = 0; i < ViewModel.Indices.Length; i++)
