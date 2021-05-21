@@ -1,0 +1,3 @@
+[submodule "Blauhaus.Graphics3D"]
+	path = Blauhaus.Graphics3D
+	url = git@github.com:BlauhausTechnology/Blauhaus.Graphics3D.git
