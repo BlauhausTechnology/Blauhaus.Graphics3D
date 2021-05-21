@@ -60,7 +60,8 @@ namespace Blauhaus.Graphics3D
         }
         
         public Vector3 Position { get => _position; set { _position = value; UpdateMatrices(); } }
-         
+        
+
         //hmmmm
         public float Yaw { get => _yaw; set { _yaw = value; UpdateMatrices(); } }
         public float Pitch { get => _pitch; set { _pitch = value; UpdateMatrices(); } }
