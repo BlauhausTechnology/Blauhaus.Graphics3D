@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Numerics;
-using Blauhaus.Graphics3D;
 using Blauhaus.MVVM.Abstractions.ViewModels;
+
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 
-namespace Blauhaus.Graphics3d.ViewModels
+namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
 {
     public class PyramidViewModel : BaseViewModel
     {
