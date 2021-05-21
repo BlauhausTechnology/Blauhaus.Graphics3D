@@ -2,7 +2,7 @@
 using Blauhaus.Common.ValueObjects.BuildConfigs;
 using Blauhaus.DeviceServices.Common.Ioc;
 using Blauhaus.Graphics3D.Runner.Maui.Pages;
-using Blauhaus.Graphics3d.ViewModels;
+using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
 using Blauhaus.MVVM.Services;
 using Blauhaus.MVVM.Xamarin.App;
 using Blauhaus.MVVM.Xamarin.Ioc;
