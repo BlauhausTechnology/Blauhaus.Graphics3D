@@ -1,4 +1,6 @@
-﻿using Blauhaus.MVVM.Xamarin.Views.Content;
+﻿using System;
+using System.Numerics;
+using Blauhaus.MVVM.Xamarin.Views.Content;
 using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Runner.Maui.Pages.Base
@@ -8,5 +10,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages.Base
         protected BaseGraphics3DPage(TViewModel viewModel) : base(viewModel)
         {
         }
+
+       
     }
 }

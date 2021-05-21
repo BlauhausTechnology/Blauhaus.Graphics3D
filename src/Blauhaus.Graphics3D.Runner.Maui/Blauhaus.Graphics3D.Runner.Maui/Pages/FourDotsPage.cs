@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Blauhaus.Graphics3D.Runner.Maui.Pages.Base;
-using Blauhaus.Graphics3d.ViewModels;
+using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
@@ -32,12 +32,12 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             var pointsToShow = new Vector3[]
             {
                 new ( 0,  0,  0),   //middle of screen, middle distance
-                new ( 2,  0,  0),   //right of screen, middle distance
-                new (-1,  1,  2),  //top left of screen, far distance
-                new ( 1, -1, -2)   //botth right of screen, near distance
+                new ( 0,  2,  0),   //right of screen, middle distance
+                new (-1, -1,  2),  //top left of screen, far distance
+                new ( 1,  1, -2)   //botth right of screen, near distance
             };
 
-            var camera = new Camera(info.Width, info.Height, new Vector3(0, 0, -5), Vector3.Zero, Vector3.UnitY);
+            var camera = new Camera(info.Width, info.Height, new Vector3(10, 0, 0), -Vector3.UnitX, Vector3.UnitZ);
             var viewToProjectionCanvas = camera.GetScreenCoordinates(pointsToShow);
 
             var paint = new SKPaint
