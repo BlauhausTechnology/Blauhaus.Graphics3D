@@ -10,11 +10,10 @@ namespace Blauhaus.Graphics3D
         private float _width;
         private float _height;
         private Vector3 _position; 
-        private Vector3 _lookDirection;
+        private Vector3 _lookingAt;
         private Vector3 _upVector;
         private float _nearclip;
         private float _farClip;
-        private Quaternion _cameraRotation;
 
         private Matrix4x4 _worldMatrix;
         private Matrix4x4 _viewMatrix;
@@ -26,17 +25,16 @@ namespace Blauhaus.Graphics3D
 
         public Camera(
             float width, float height, 
-            Vector3 position, Vector3 lookDirection, Vector3 upVector, 
+            Vector3 position, Vector3 lookingAt, Vector3 upVector, 
             float nearclip = 0.01f, float farClip = 100f)
         {
             _width = width;
             _height = height;
             _position = position;
-            _lookDirection = lookDirection;
+            _lookingAt = lookingAt;
             _upVector = upVector;
             _nearclip = nearclip;
             _farClip = farClip;
-            _cameraRotation = Quaternion.Identity;
             
             //non-traditional Matrix because of different coordinate system
             _worldMatrix = new Matrix4x4(
@@ -57,15 +55,17 @@ namespace Blauhaus.Graphics3D
 
         public void SetLookAt(Vector3 lookAtVector)
         {
-            _lookDirection = lookAtVector;
+            _lookingAt = lookAtVector;
             UpdateMatrices();
         }
         
         public Vector3 Position { get => _position; set { _position = value; UpdateMatrices(); } }
          
+        //hmmmm
         public float Yaw { get => _yaw; set { _yaw = value; UpdateMatrices(); } }
         public float Pitch { get => _pitch; set { _pitch = value; UpdateMatrices(); } }
         public float Roll { get => _roll; set { _roll = value; UpdateMatrices(); } }
+         
 
         public Vector2 GetScreenPosition(Vector3 worldPosition)
         {
@@ -74,7 +74,6 @@ namespace Blauhaus.Graphics3D
                 pointInCameraSpace.X / -pointInCameraSpace.Z * _width/2f + _width/2f, 
                 pointInCameraSpace.Y / -pointInCameraSpace.Z * _height/2f + _height/2f);
         }
-
         public Vector2[] GetScreenCoordinates(IReadOnlyList<Vector3> worldPoints)
         {
             var canvasCoordinates = new Vector2[worldPoints.Count];
@@ -93,16 +92,28 @@ namespace Blauhaus.Graphics3D
 
         private void UpdateMatrices()
         {
+            var lookDirection = Vector3.Normalize(_lookingAt - _position);
+            var leftDirection = Vector3.Cross(_upVector, lookDirection);
 
-            _cameraRotation = Quaternion.CreateFromYawPitchRoll(Yaw, Pitch, Roll);
-            //var lookDirection = Vector3.Transform(_lookDirection, lookRotation);
-            _lookDirection = Vector3.Transform(_lookDirection, Matrix4x4.CreateFromQuaternion(_cameraRotation));
+            var cameraYaw = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, _yaw);
+            lookDirection = Vector3.Transform(lookDirection, cameraYaw);
+            
+            var cameraPitchRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, _pitch);
+            lookDirection = Vector3.Transform(lookDirection, cameraPitchRotation);
+            //_upVector = Vector3.Transform(_upVector, cameraPitchRotation);
+
+            var cameraRoll = Quaternion.CreateFromAxisAngle(Vector3.UnitX, _roll);
+            lookDirection = Vector3.Transform(lookDirection, cameraRoll);
+            //_upVector = Vector3.Transform(_upVector, cameraRoll);
+
+            var cameraTarget = _position + lookDirection;
+            cameraTarget = new Vector3(cameraTarget.X, -cameraTarget.Y, cameraTarget.Z);
 
             _viewMatrix = Matrix4x4.CreateLookAt(
-                cameraPosition: _position, 
-                cameraTarget: /*_position*/ _lookDirection, 
+                cameraPosition: _position,
+                cameraTarget: cameraTarget,
                 cameraUpVector: _upVector);
-            
+
             _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
                 fieldOfView: (float) (Math.PI / 4f), 
                 aspectRatio: _width/_height, 
@@ -114,8 +125,6 @@ namespace Blauhaus.Graphics3D
             _screenMatrix = Matrix4x4.Multiply(worldViewMatrix, _projectionMatrix);
 
         }
-
          
-
     }
 }

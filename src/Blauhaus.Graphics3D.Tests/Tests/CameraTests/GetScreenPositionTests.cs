@@ -7,23 +7,6 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests
     [TestFixture]
     public class GetScreenPositionTests : BaseCameraTest
     {
-        private const float MidX = 500;
-        private const float MidY = 500;
-        private const float LeftX = 0;
-        private const float RightX = 1000;
-        private const float TopY = 0;
-        private const float BottomY = 1000;
-        
-        private static void VerifyOnScreen(Vector2 screenPosition)
-        {
-            Assert.That(screenPosition.X, Is.GreaterThan(LeftX));
-            Assert.That(screenPosition.X, Is.LessThan(RightX));
-            
-            Assert.That(screenPosition.Y, Is.GreaterThan(TopY));
-            Assert.That(screenPosition.Y, Is.LessThan(BottomY));
-
-        }
-
 
         public class LookingAtOrigin : GetScreenPositionTests
         {
@@ -31,7 +14,7 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests
             {
                 base.Setup();
 
-                LookAtVector = Vector3.Zero;
+                LookingAt = Vector3.Zero;
             }
 
             [Test]
