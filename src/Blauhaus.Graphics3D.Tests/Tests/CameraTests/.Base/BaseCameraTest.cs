@@ -23,7 +23,6 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests.Base
         protected float BottomY => Height;
         protected Vector2 Mid => new(MidX, MidY);
 
-
         public override void Setup()
         {
             base.Setup();
@@ -49,6 +48,30 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests.Base
             
             Assert.That(screenPosition.Y, Is.GreaterThan(TopY));
             Assert.That(screenPosition.Y, Is.LessThan(BottomY));
+        }
+
+        protected void VerifyLeftOfScreen(Vector2 screenPoint)
+        {
+            Assert.That(screenPoint.X, Is.LessThan(MidX));
+            VerifyOnScreen(screenPoint);
+        }
+
+        protected void VerifyRightOfScreen(Vector2 screenPoint)
+        {
+            Assert.That(screenPoint.X, Is.GreaterThan(MidX));
+            VerifyOnScreen(screenPoint);
+        }
+
+        protected void VerifyTopHalfOfScreen(Vector2 screenPoint)
+        {
+            Assert.That(screenPoint.Y, Is.LessThan(MidY));
+            VerifyOnScreen(screenPoint);
+        }
+        
+        protected void VerifyBottomHalfOfScreen(Vector2 screenPoint)
+        {
+            Assert.That(screenPoint.Y, Is.GreaterThan(MidY));
+            VerifyOnScreen(screenPoint);
         }
     }
 }

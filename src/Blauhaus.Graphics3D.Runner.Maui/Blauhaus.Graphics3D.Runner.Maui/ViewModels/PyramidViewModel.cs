@@ -46,7 +46,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
             LookAtZ = 0;
 
             PositionX = 10;
-            PositionY = 0;
+            PositionY = 0.1f;
             PositionZ = 0;
         }
 

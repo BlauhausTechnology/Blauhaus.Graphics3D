@@ -70,10 +70,12 @@ namespace Blauhaus.Graphics3D
         public Vector2 GetScreenPosition(Vector3 worldPosition)
         {
             var pointInCameraSpace = Vector4.Transform(new Vector4(worldPosition, 1), _screenMatrix);  
+            
             return new Vector2(
                 pointInCameraSpace.X / -pointInCameraSpace.Z * _width/2f + _width/2f, 
                 pointInCameraSpace.Y / -pointInCameraSpace.Z * _height/2f + _height/2f);
         }
+         
         public Vector2[] GetScreenCoordinates(IReadOnlyList<Vector3> worldPoints)
         {
             var canvasCoordinates = new Vector2[worldPoints.Count];
@@ -91,11 +93,32 @@ namespace Blauhaus.Graphics3D
 
 
         private void UpdateMatrices()
-        {
-            var lookDirection = Vector3.Normalize(_lookingAt - _position);
-            var leftDirection = Vector3.Cross(_upVector, lookDirection);
+        { 
+            _viewMatrix = Matrix4x4.CreateLookAt(
+                cameraPosition: new Vector3(_position.X, -_position.Y, _position.Z),
+                cameraTarget: new Vector3(_lookingAt.X, -_lookingAt.Y, _lookingAt.Z),
+                cameraUpVector: _upVector);
 
-            var cameraYaw = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, _yaw);
+            _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
+                fieldOfView: (float) (Math.PI / 4f), 
+                aspectRatio: _width /_height, 
+                nearPlaneDistance:_nearclip, 
+                farPlaneDistance: _farClip);
+            
+            var worldViewMatrix = Matrix4x4.Multiply(_worldMatrix , _viewMatrix);
+
+            _screenMatrix = Matrix4x4.Multiply(worldViewMatrix, _projectionMatrix);
+
+        }
+
+        private Vector3 GetLookDirection()
+        {
+            
+            var lookDirection = Vector3.Normalize(_lookingAt - _position);
+            
+            var leftDirection = Vector3.Cross(_upVector, lookDirection); //maybe use for panning
+
+            var cameraYaw = Quaternion.CreateFromAxisAngle(-Vector3.UnitZ, _yaw);
             lookDirection = Vector3.Transform(lookDirection, cameraYaw);
             
             var cameraPitchRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, _pitch);
@@ -104,26 +127,8 @@ namespace Blauhaus.Graphics3D
 
             var cameraRoll = Quaternion.CreateFromAxisAngle(Vector3.UnitX, _roll);
             lookDirection = Vector3.Transform(lookDirection, cameraRoll);
-            //_upVector = Vector3.Transform(_upVector, cameraRoll);
 
-            var cameraTarget = _position + lookDirection;
-            cameraTarget = new Vector3(cameraTarget.X, -cameraTarget.Y, cameraTarget.Z);
-
-            _viewMatrix = Matrix4x4.CreateLookAt(
-                cameraPosition: _position,
-                cameraTarget: cameraTarget,
-                cameraUpVector: _upVector);
-
-            _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
-                fieldOfView: (float) (Math.PI / 4f), 
-                aspectRatio: _width/_height, 
-                nearPlaneDistance:_nearclip, 
-                farPlaneDistance: _farClip);
-            
-            var worldViewMatrix = Matrix4x4.Multiply(_worldMatrix , _viewMatrix);
-
-            _screenMatrix = Matrix4x4.Multiply(worldViewMatrix, _projectionMatrix);
-
+            return lookDirection;
         }
          
     }
