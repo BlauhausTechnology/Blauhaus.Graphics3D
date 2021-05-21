@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Tests\ExtensionsTests\**" />
+    <EmbeddedResource Remove="Tests\ExtensionsTests\**" />
+    <None Remove="Tests\ExtensionsTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="Tests\.Base\BaseGraphics3DTest.cs" />
     <Compile Include="Tests\CameraTests\.Base\BaseCameraTest.cs" />
   </ItemGroup>
@@ -20,10 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blauhaus.Graphics3D\Blauhaus.Graphics3D.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Tests\ExtensionsTests\Vector3ExtensionsTests\" />
   </ItemGroup>
 
 </Project>

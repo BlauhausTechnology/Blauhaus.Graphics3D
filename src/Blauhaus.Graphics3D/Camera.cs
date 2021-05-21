@@ -60,6 +60,16 @@ namespace Blauhaus.Graphics3D
         }
         
         public Vector3 Position { get => _position; set { _position = value; UpdateMatrices(); } }
+
+        public void Zoom(ZoomEvent zoomEvent)
+        {
+            var currentCameraDistance = _position.Length() - _lookingAt.Length();
+            var changeInDistance = (float) (1f - zoomEvent.Scale) * currentCameraDistance;
+            var newCameraDistance = _position.Length() + changeInDistance;
+            var currentCameraVector = Vector3.Normalize(_position);
+            var newCameraPosition = newCameraDistance * currentCameraVector;
+            Position = newCameraPosition;
+        }
         
 
         //hmmmm
