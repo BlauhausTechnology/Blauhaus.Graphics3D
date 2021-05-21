@@ -1,0 +1,23 @@
+name: Blauhaus Packages
+on:
+  push:
+    branches:
+    - release/*
+
+jobs:
+
+  build:
+     runs-on: ubuntu-latest
+     steps:
+     - uses: actions/checkout@v1
+     - name: Set Version
+       run: |
+        npm install @actions/core --save
+        node ./scripts/getversion.js
+     - name: Build NuGet Package
+       run: |
+        dotnet build ./src/Blauhaus.Graphics3D.sln --configuration Release
+        dotnet pack ./src/Blauhaus.Graphics3D/Blauhaus.Graphics3D.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
+     - name: Deploy NuGet Package
+       run:  |
+        dotnet nuget push /home/runner/work/Blauhaus.Graphics3D/Blauhaus.Graphics3D/Blauhaus.Graphics3D.${VERSION_NAME}.nupkg -k ${{ secrets.MYGET_API_KEY }} -s https://www.myget.org/F/maxxor/api/v2/package
