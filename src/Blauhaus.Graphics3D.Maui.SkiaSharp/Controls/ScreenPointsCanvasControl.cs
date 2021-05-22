@@ -12,10 +12,11 @@ using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls
 {
-    public class ScreenPointsCanvasControl<TViewModel> : BaseGLCanvasControl<TViewModel>
+    public class ScreenPointsCanvasControl : BaseCanvasControl
     {
-        public ScreenPointsCanvasControl(TViewModel viewModel) : base(viewModel)
+        public ScreenPointsCanvasControl(IViewModel viewModel)
         {
+            BindingContext = viewModel;
             SetBinding(ScreenPointsProperty, new Binding("ScreenPoints", BindingMode.OneWay, new ActionConverter(Redraw)));
         }
  

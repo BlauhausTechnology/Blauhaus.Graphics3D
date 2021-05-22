@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Numerics;
 using Blauhaus.Graphics3D.Maui.SkiaSharp.Controls;
-using Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base;
 using Blauhaus.Graphics3D.Maui.SkiaSharp.Pages;
 using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
-using Blauhaus.MVVM.Xamarin.Converters;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.CommunityToolkit.Markup;
@@ -14,7 +11,7 @@ using static Xamarin.CommunityToolkit.Markup.GridRowsColumns;
 
 namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 {
-    public class PryamidPage : BaseGraphics3DPage<PyramidViewModel>
+    public class PryamidPage : BaseGraphics3DPage<PyramidViewModel, ScreenPointsCanvasControl>
     {
         private enum MainRows { Canvas, Controls }
 
@@ -22,7 +19,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
         {
             BackgroundColor = Color.Black;
 
-            _canvasView = new ScreenPointsCanvasControl<PyramidViewModel>(viewModel)
+            Canvas = new ScreenPointsCanvasControl(viewModel)
             {
                 DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions,
                 DrawHandler = canvas =>
@@ -55,7 +52,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 
                 Children =
                 {
-                    _canvasView.Row(MainRows.Canvas),
+                    Canvas.Row(MainRows.Canvas),
                     controls.Row(MainRows.Controls)
                 }
             };
@@ -135,17 +132,13 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             declaringType: typeof(ContentPage),
             defaultValue: Array.Empty<Vector2>());
 
-        private readonly ScreenPointsCanvasControl<PyramidViewModel> _canvasView;
 
         public object ScreenPoints
         {
             get => GetValue(ScreenPointsProperty);
             set => SetValue(ScreenPointsProperty, value);
         }
-
-        protected override BaseCanvasView<PyramidViewModel> GetCanvas()
-        {
-            return _canvasView;
-        }
+         
+        protected override ScreenPointsCanvasControl<PyramidViewModel> Canvas { get; }
     }
 }

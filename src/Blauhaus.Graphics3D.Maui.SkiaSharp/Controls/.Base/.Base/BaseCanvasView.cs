@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base
 {
-    public abstract class BaseCanvasView <TViewModel> : BaseContentView<TViewModel>
+    public abstract class BaseCanvasView: BaseContentView
     {
         protected Vector2 ScreenDimensions;
         protected PinchGestureRecognizer PinchGestureRecognizer;
@@ -16,7 +16,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base
         public Action<ZoomEvent>? ZoomHandler;
         public Action<SKCanvas>? DrawHandler;
 
-        protected BaseCanvasView(TViewModel viewModel) : base(viewModel)
+        protected BaseCanvasView()
         {
             PinchGestureRecognizer = new PinchGestureRecognizer();
             GestureRecognizers.Add(PinchGestureRecognizer);

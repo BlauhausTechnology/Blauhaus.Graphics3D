@@ -8,11 +8,11 @@ using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
-    public abstract class BaseGLCanvasControl<TViewModel> : BaseCanvasView<TViewModel>
+    public abstract class BaseGLCanvasControl : BaseCanvasView
     {
         private readonly SKGLView _canvasView = new();
 
-        protected BaseGLCanvasControl(TViewModel viewModel) : base(viewModel)
+        protected BaseGLCanvasControl()
         {
             Content = _canvasView;
         }

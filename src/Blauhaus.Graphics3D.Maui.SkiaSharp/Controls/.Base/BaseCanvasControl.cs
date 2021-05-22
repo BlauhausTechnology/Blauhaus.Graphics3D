@@ -8,11 +8,11 @@ using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
-    public abstract class BaseCanvasControl<TViewModel> : BaseCanvasView<TViewModel>
+    public abstract class BaseCanvasControl : BaseCanvasView
     {
         private readonly SKCanvasView _canvasView = new();
 
-        protected BaseCanvasControl(TViewModel viewModel) : base(viewModel)
+        protected BaseCanvasControl() 
         {
             _canvasView.PaintSurface += OnCanvasViewPaintSurface;
             _canvasView.EnableTouchEvents = true;

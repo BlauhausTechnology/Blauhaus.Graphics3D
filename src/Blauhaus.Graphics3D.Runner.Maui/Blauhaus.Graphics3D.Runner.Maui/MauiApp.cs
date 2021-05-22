@@ -7,7 +7,6 @@ using Blauhaus.MVVM.Services;
 using Blauhaus.MVVM.Xamarin.App;
 using Blauhaus.MVVM.Xamarin.Ioc;
 using Microsoft.Extensions.DependencyInjection;
-using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Runner.Maui
 {
