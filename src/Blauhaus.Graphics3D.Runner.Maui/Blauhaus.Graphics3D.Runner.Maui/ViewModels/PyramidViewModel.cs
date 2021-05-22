@@ -136,7 +136,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
 
         private void UpdateLookAt()
         {
-            Camera.SetLookAt(new Vector3(LookAtX, LookAtY, LookAtZ));
+            Camera.LookingAt = (new Vector3(LookAtX, LookAtY, LookAtZ));
             ScreenPoints = Camera.GetScreenCoordinates(_worldVertices);
         }
 

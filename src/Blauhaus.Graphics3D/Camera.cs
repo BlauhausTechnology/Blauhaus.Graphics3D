@@ -52,13 +52,9 @@ namespace Blauhaus.Graphics3D
             _height = height;
             UpdateMatrices();
         }
-
-        public void SetLookAt(Vector3 lookAtVector)
-        {
-            _lookingAt = lookAtVector;
-            UpdateMatrices();
-        }
+         
         
+        public Vector3 LookingAt { get => _lookingAt; set { _lookingAt = value; UpdateMatrices(); } }
         public Vector3 Position { get => _position; set { _position = value; UpdateMatrices(); } }
 
         public void Zoom(ZoomEvent zoomEvent)

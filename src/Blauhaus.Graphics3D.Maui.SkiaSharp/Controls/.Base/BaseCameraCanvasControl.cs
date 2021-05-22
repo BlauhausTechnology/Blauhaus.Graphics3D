@@ -4,7 +4,6 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
     public abstract class BaseCameraCanvasControl : BaseCanvasControl
     {
-        protected readonly Camera Camera;
 
         protected BaseCameraCanvasControl()
         {
@@ -19,8 +18,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
             };
 
         }
-        
-        public Vector3 CameraPosition { set => Camera.Position = value; }
-        public Vector3 CameraLookingAt { set => Camera.SetLookAt(value); }
+        public Camera Camera { get; }
+         
     }
 }
