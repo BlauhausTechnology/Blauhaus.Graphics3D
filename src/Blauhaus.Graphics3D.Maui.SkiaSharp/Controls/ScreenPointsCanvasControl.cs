@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls
 {
-    public class ScreenPointsCanvasControl<TViewModel> : BaseCanvasControl<TViewModel>
+    public class ScreenPointsCanvasControl<TViewModel> : BaseGLCanvasControl<TViewModel>
     {
         public ScreenPointsCanvasControl(TViewModel viewModel) : base(viewModel)
         {

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Numerics;
 using Blauhaus.Graphics3D.Runner.Maui.Pages.Base;
 using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
+using Blauhaus.MVVM.Xamarin.Views.Content;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 {
-    public class FourDotsPage : BaseGraphics3DPage<FourDotsViewModel>
+    public class FourDotsPage : BasePage<FourDotsViewModel>
     {
         public FourDotsPage(FourDotsViewModel viewModel) : base(viewModel)
         {

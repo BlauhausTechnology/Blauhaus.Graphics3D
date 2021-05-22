@@ -1,10 +1,11 @@
 ﻿using Blauhaus.Graphics3D.Runner.Maui.Pages.Base;
 using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
+using Blauhaus.MVVM.Xamarin.Views.Content;
 using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 {
-    public class MainPage : BaseGraphics3DPage<MainViewModel>
+    public class MainPage : BasePage<MainViewModel>
     {
         public MainPage(MainViewModel viewModel) : base(viewModel)
         {

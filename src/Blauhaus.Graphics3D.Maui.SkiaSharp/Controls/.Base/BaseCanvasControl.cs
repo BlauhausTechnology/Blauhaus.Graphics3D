@@ -16,10 +16,12 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
         {
             _canvasView.PaintSurface += OnCanvasViewPaintSurface;
             _canvasView.EnableTouchEvents = true;
-            _canvasView.Touch += (_, args) => HandleTouch(args);
+            _canvasView.Touch += HandleTouch;
 
             Content = _canvasView;
         }
+        
+        public override void Redraw() => _canvasView.InvalidateSurface();
 
         private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
@@ -35,44 +37,24 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 
             DrawHandler?.Invoke(canvas);
         }
-
         
+        public override void HandleAppearing()
+        {
+            base.HandleAppearing();
+            
+            _canvasView.PaintSurface += OnCanvasViewPaintSurface;
+            _canvasView.EnableTouchEvents = true;
+            _canvasView.Touch += HandleTouch;
+        }
 
-        protected void Redraw() => _canvasView.InvalidateSurface();
-
-        //public void HandleZoom(Action<ZoomEvent> zoomHandler)
-        //{
-        //    PinchGestureRecognizer = new PinchGestureRecognizer();
-        //    PinchGestureRecognizer.PinchUpdated += (_, args) =>
-        //    {
-        //        if (args.Status == GestureStatus.Running)
-        //        {
-        //            zoomHandler?.Invoke(new ZoomEvent(args.ScaleOrigin.X, args.ScaleOrigin.Y, args.Scale));
-        //        }
-        //    };
-        //    GestureRecognizers.Add(PinchGestureRecognizer);
-
-        //    if (Device.Idiom == TargetIdiom.Desktop)
-        //    {
-        //        if (_canvasView.EnableTouchEvents == false)
-        //        {
-        //            _canvasView.EnableTouchEvents = true;
-        //            _canvasView.Touch += (_, args) =>
-        //            {
-        //                if (args.ActionType == SKTouchAction.WheelChanged)
-        //                {
-        //                    if (args.WheelDelta != 0)
-        //                    {
-        //                        var scale = (ScreenDimensions.Y + args.WheelDelta) / ScreenDimensions.Y;
-        //                        var x = args.Location.X;
-        //                        var y = args.Location.Y;
-
-        //                        zoomHandler?.Invoke(new ZoomEvent(x, y, scale));
-        //                    }
-        //                }
-        //            };
-        //        }
-        //    }
-        //}
+        public override void HandleDisappearing()
+        {
+            base.HandleDisappearing();
+            
+            _canvasView.PaintSurface -= OnCanvasViewPaintSurface;
+            _canvasView.EnableTouchEvents = false;
+            _canvasView.Touch -= HandleTouch;
+        }
+ 
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Numerics;
 using Blauhaus.Graphics3D.Maui.SkiaSharp.Controls;
+using Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base;
 using Blauhaus.Graphics3D.Runner.Maui.Pages.Base;
 using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
 using Blauhaus.MVVM.Xamarin.Converters;
@@ -15,14 +16,13 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 {
     public class PryamidPage : BaseGraphics3DPage<PyramidViewModel>
     {
-
         private enum MainRows { Canvas, Controls }
 
         public PryamidPage(PyramidViewModel viewModel) : base(viewModel)
         {
             BackgroundColor = Color.Black;
 
-            var canvasView = new ScreenPointsCanvasControl<PyramidViewModel>(viewModel)
+            _canvasView = new ScreenPointsCanvasControl<PyramidViewModel>(viewModel)
             {
                 DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions,
                 DrawHandler = canvas =>
@@ -55,7 +55,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 
                 Children =
                 {
-                    canvasView.Row(MainRows.Canvas),
+                    _canvasView.Row(MainRows.Canvas),
                     controls.Row(MainRows.Controls)
                 }
             };
@@ -135,10 +135,17 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             declaringType: typeof(ContentPage),
             defaultValue: Array.Empty<Vector2>());
 
+        private readonly ScreenPointsCanvasControl<PyramidViewModel> _canvasView;
+
         public object ScreenPoints
         {
             get => GetValue(ScreenPointsProperty);
             set => SetValue(ScreenPointsProperty, value);
+        }
+
+        protected override BaseCanvasView<PyramidViewModel> GetCanvas()
+        {
+            return _canvasView;
         }
     }
 }

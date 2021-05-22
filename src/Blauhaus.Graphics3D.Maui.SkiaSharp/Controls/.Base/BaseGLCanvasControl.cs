@@ -14,13 +14,29 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 
         protected BaseGLCanvasControl(TViewModel viewModel) : base(viewModel)
         {
-            _canvasView.PaintSurface += OnCanvasViewPaintSurface;
-            _canvasView.EnableTouchEvents = true;
-            _canvasView.Touch += (_, args) => HandleTouch(args);
-
             Content = _canvasView;
         }
+        
+        public override void Redraw() => _canvasView.InvalidateSurface();
 
+        public override void HandleAppearing()
+        {
+            base.HandleAppearing();
+            
+            _canvasView.PaintSurface += OnCanvasViewPaintSurface;
+            _canvasView.EnableTouchEvents = true;
+            _canvasView.Touch += HandleTouch;
+        }
+
+        public override void HandleDisappearing()
+        {
+            base.HandleDisappearing();
+            
+            _canvasView.PaintSurface -= OnCanvasViewPaintSurface;
+            _canvasView.EnableTouchEvents = false;
+            _canvasView.Touch -= HandleTouch;
+        }
+        
         private void OnCanvasViewPaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
         {
             var surface = e.Surface;
@@ -36,44 +52,6 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 
             DrawHandler?.Invoke(canvas);
         }
-
-        public void HandleZoom(Action<ZoomEvent> pinchHandler)
-        {
-            PinchGestureRecognizer = new PinchGestureRecognizer();
-            PinchGestureRecognizer.PinchUpdated += (_, args) =>
-            {
-                if (args.Status == GestureStatus.Running)
-                {
-                    pinchHandler?.Invoke(new ZoomEvent(args.ScaleOrigin.X, args.ScaleOrigin.Y, args.Scale));
-                }
-            };
-            GestureRecognizers.Add(PinchGestureRecognizer);
-
-            if (Device.Idiom == TargetIdiom.Desktop)
-            {
-                if (_canvasView.EnableTouchEvents == false)
-                {
-                    _canvasView.EnableTouchEvents = true;
-                    _canvasView.Touch += (_, args) =>
-                    {
-                        HandleTouch(args);
-                        if (args.ActionType == SKTouchAction.WheelChanged)
-                        {
-                            if (args.WheelDelta != 0)
-                            {
-                                var scale = (ScreenDimensions.Y + args.WheelDelta) / ScreenDimensions.Y;
-                                var x = args.Location.X;
-                                var y = args.Location.Y;
-
-                                pinchHandler?.Invoke(new ZoomEvent(x, y, scale));
-                            }
-                        }
-                    };
-                }
-            }
-        }
-
-        
 
         
     }
