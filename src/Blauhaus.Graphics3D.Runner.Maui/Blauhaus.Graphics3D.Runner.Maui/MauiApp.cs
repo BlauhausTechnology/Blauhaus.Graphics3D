@@ -27,6 +27,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui
             services
                 .AddPage<MainPage, MainViewModel>()
                 .AddPage<PryamidPage, PyramidViewModel>()
+                .AddPage<NakedPyramidPage, NakedPyramidViewModel>()
                 .AddPage<FourDotsPage, FourDotsViewModel>();
         }
         
@@ -34,7 +35,8 @@ namespace Blauhaus.Graphics3D.Runner.Maui
         {
             base.HandleAppStarting();
             //MainPage = AppServiceLocator.Resolve<FourDotsPage>();
-            MainPage = AppServiceLocator.Resolve<PryamidPage>();
+            //MainPage = AppServiceLocator.Resolve<PryamidPage>();
+            MainPage = AppServiceLocator.Resolve<NakedPyramidPage>();
         }
 
         protected override IBuildConfig GetBuildConfig()

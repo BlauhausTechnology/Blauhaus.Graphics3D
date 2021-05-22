@@ -15,32 +15,29 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
     {
         private enum MainRows { Canvas, Controls }
 
-        public PryamidPage(PyramidViewModel viewModel) : base(viewModel)
+        public PryamidPage(PyramidViewModel viewModel) : base(viewModel, new ScreenPointsCanvasControl(viewModel))
         {
             BackgroundColor = Color.Black;
 
-            Canvas = new ScreenPointsCanvasControl(viewModel)
+            Canvas.DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions;
+            
+            Canvas.DrawHandler = canvas =>
             {
-                DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions,
-                DrawHandler = canvas =>
+
+                var paint = new SKPaint {Style = SKPaintStyle.Stroke, StrokeWidth = 1, IsAntialias = true, Color = Color.Red.ToSKColor()};
+
+                for (var i = 0; i < ViewModel.Indices.Length / 3; i++)
                 {
-                    canvas.Clear();
-
-                    var paint = new SKPaint {Style = SKPaintStyle.Stroke, StrokeWidth = 1, IsAntialias = true, Color = Color.Red.ToSKColor()};
-
-                    for (var i = 0; i < ViewModel.Indices.Length / 3; i++)
-                    {
-                        using var trianglePath = new SKPath();
-                        trianglePath.MoveTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 0]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 0]].Y);
-                        trianglePath.LineTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 1]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 1]].Y);
-                        trianglePath.LineTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 2]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 2]].Y);
-                        trianglePath.Close();
-                        canvas.DrawPath(trianglePath, paint);
-                    }
-                },
-                ZoomHandler = ViewModel.Zoom
+                    using var trianglePath = new SKPath();
+                    trianglePath.MoveTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 0]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 0]].Y);
+                    trianglePath.LineTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 1]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 1]].Y);
+                    trianglePath.LineTo(ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 2]].X, ViewModel.ScreenPoints[ViewModel.Indices[i * 3 + 2]].Y);
+                    trianglePath.Close();
+                    canvas.DrawPath(trianglePath, paint);
+                }
             };
-
+            
+            Canvas.ZoomHandler = ViewModel.Zoom;
 
             var controls = new CanvasControls();
 
@@ -58,6 +55,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             };
         }
          
+
         private class CanvasControls : Grid
         {
             private enum ControlColumns { LookAt, Position, Rotation }
@@ -125,20 +123,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 }.Column(ControlColumns.Rotation));
             }
         }
-
-        public static readonly BindableProperty ScreenPointsProperty = BindableProperty.Create(
-            propertyName: nameof(ScreenPoints),
-            returnType: typeof(Vector2[]),
-            declaringType: typeof(ContentPage),
-            defaultValue: Array.Empty<Vector2>());
-
-
-        public object ScreenPoints
-        {
-            get => GetValue(ScreenPointsProperty);
-            set => SetValue(ScreenPointsProperty, value);
-        }
          
-        protected override ScreenPointsCanvasControl<PyramidViewModel> Canvas { get; }
+         
     }
 }

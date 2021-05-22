@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Controls\.Base\BaseCameraCanvasControl.cs" />
     <Compile Include="Controls\.Base\BaseCanvasControl.cs" />
     <Compile Include="Controls\.Base\.Base\BaseCanvasView.cs" />
     <Compile Include="Controls\.Base\BaseGLCanvasControl.cs" />

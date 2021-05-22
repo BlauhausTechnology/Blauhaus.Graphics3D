@@ -11,6 +11,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
     public abstract class BaseCanvasControl : BaseCanvasView
     {
         private readonly SKCanvasView _canvasView = new();
+        private bool _isDrawing;
 
         protected BaseCanvasControl() 
         {
@@ -21,13 +22,22 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
             Content = _canvasView;
         }
         
-        public override void Redraw() => _canvasView.InvalidateSurface();
+        public override void Redraw() => 
+            _canvasView.InvalidateSurface();
 
         private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
+            if (_isDrawing)
+            {
+                return;
+            }
+
+            _isDrawing = true;
+
             var info = e.Info;
             var surface = e.Surface;
             var canvas = surface.Canvas;
+            canvas.Clear();
 
             if (ScreenDimensions.X != info.Width || ScreenDimensions.Y != info.Height)
             {
@@ -36,6 +46,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
             }
 
             DrawHandler?.Invoke(canvas);
+            _isDrawing = false;
         }
         
         public override void HandleAppearing()

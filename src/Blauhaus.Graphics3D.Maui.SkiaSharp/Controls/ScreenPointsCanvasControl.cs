@@ -14,6 +14,10 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls
 {
     public class ScreenPointsCanvasControl : BaseCanvasControl
     {
+        public ScreenPointsCanvasControl()
+        {
+        }
+
         public ScreenPointsCanvasControl(IViewModel viewModel)
         {
             BindingContext = viewModel;
