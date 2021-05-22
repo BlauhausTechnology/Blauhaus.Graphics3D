@@ -24,9 +24,8 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 
             var canvasView = new ScreenPointsCanvasControl<PyramidViewModel>(viewModel)
             {
-                DimensionsChanged = dimensions => ViewModel.ScreenDimensions = dimensions,
-
-                Draw = canvas =>
+                DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions,
+                DrawHandler = canvas =>
                 {
                     canvas.Clear();
 
@@ -41,8 +40,10 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                         trianglePath.Close();
                         canvas.DrawPath(trianglePath, paint);
                     }
-                }
+                },
+                ZoomHandler = ViewModel.Zoom
             };
+
 
             var controls = new CanvasControls();
 

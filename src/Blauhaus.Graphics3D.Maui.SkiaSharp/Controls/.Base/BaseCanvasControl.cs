@@ -15,6 +15,9 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
         protected BaseCanvasControl(TViewModel viewModel) : base(viewModel)
         {
             _canvasView.PaintSurface += OnCanvasViewPaintSurface;
+            _canvasView.EnableTouchEvents = true;
+            _canvasView.Touch += (_, args) => HandleTouch(args);
+
             Content = _canvasView;
         }
 
@@ -27,51 +30,49 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
             if (ScreenDimensions.X != info.Width || ScreenDimensions.Y != info.Height)
             {
                 ScreenDimensions = new Vector2(info.Width, info.Height);
-                DimensionsChanged?.Invoke(ScreenDimensions);
+                DimensionsChangedHandler?.Invoke(ScreenDimensions);
             }
 
-            Draw?.Invoke(canvas);
+            DrawHandler?.Invoke(canvas);
         }
 
         
-        public Action<Vector2>? DimensionsChanged { get; set; }
-        public Action<SKCanvas>? Draw { get; set; }
 
         protected void Redraw() => _canvasView.InvalidateSurface();
 
-        public void HandleZoom(Action<ZoomEvent> pinchHandler)
-        {
-            PinchGestureRecognizer = new PinchGestureRecognizer();
-            PinchGestureRecognizer.PinchUpdated += (_, args) =>
-            {
-                if (args.Status == GestureStatus.Running)
-                {
-                    pinchHandler?.Invoke(new ZoomEvent(args.ScaleOrigin.X, args.ScaleOrigin.Y, args.Scale));
-                }
-            };
-            GestureRecognizers.Add(PinchGestureRecognizer);
+        //public void HandleZoom(Action<ZoomEvent> zoomHandler)
+        //{
+        //    PinchGestureRecognizer = new PinchGestureRecognizer();
+        //    PinchGestureRecognizer.PinchUpdated += (_, args) =>
+        //    {
+        //        if (args.Status == GestureStatus.Running)
+        //        {
+        //            zoomHandler?.Invoke(new ZoomEvent(args.ScaleOrigin.X, args.ScaleOrigin.Y, args.Scale));
+        //        }
+        //    };
+        //    GestureRecognizers.Add(PinchGestureRecognizer);
 
-            if (Device.Idiom == TargetIdiom.Desktop)
-            {
-                if (_canvasView.EnableTouchEvents == false)
-                {
-                    _canvasView.EnableTouchEvents = true;
-                    _canvasView.Touch += (_, args) =>
-                    {
-                        if (args.ActionType == SKTouchAction.WheelChanged)
-                        {
-                            if (args.WheelDelta != 0)
-                            {
-                                var scale = (ScreenDimensions.Y + args.WheelDelta) / ScreenDimensions.Y;
-                                var x = args.Location.X;
-                                var y = args.Location.Y;
+        //    if (Device.Idiom == TargetIdiom.Desktop)
+        //    {
+        //        if (_canvasView.EnableTouchEvents == false)
+        //        {
+        //            _canvasView.EnableTouchEvents = true;
+        //            _canvasView.Touch += (_, args) =>
+        //            {
+        //                if (args.ActionType == SKTouchAction.WheelChanged)
+        //                {
+        //                    if (args.WheelDelta != 0)
+        //                    {
+        //                        var scale = (ScreenDimensions.Y + args.WheelDelta) / ScreenDimensions.Y;
+        //                        var x = args.Location.X;
+        //                        var y = args.Location.Y;
 
-                                pinchHandler?.Invoke(new ZoomEvent(x, y, scale));
-                            }
-                        }
-                    };
-                }
-            }
-        }
+        //                        zoomHandler?.Invoke(new ZoomEvent(x, y, scale));
+        //                    }
+        //                }
+        //            };
+        //        }
+        //    }
+        //}
     }
 }

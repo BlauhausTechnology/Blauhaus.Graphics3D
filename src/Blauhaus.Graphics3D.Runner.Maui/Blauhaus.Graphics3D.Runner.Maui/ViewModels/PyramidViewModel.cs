@@ -146,6 +146,11 @@ namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
             ScreenPoints = Camera.GetScreenCoordinates(_worldVertices);
         }
 
-
+        
+        public void Zoom(ZoomEvent zoom)
+        {
+            Camera.Zoom(zoom);
+            ScreenPoints = Camera.GetScreenCoordinates(_worldVertices);
+        }
     }
 }
