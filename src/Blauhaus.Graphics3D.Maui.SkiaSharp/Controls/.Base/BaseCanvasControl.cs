@@ -14,11 +14,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
         private bool _isDrawing;
 
         protected BaseCanvasControl() 
-        {
-            _canvasView.PaintSurface += OnCanvasViewPaintSurface;
-            _canvasView.EnableTouchEvents = true;
-            _canvasView.Touch += HandleTouch;
-
+        { 
             Content = _canvasView;
         }
         
