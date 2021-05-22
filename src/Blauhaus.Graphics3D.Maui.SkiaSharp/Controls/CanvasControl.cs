@@ -85,22 +85,16 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls
                                 pinchHandler?.Invoke(new ZoomEvent(x, y, scale));
                             }
                         }
-                        
                     };
                 }
             }
-            
         }
-          
-
         
         public static readonly BindableProperty ScreenPointsProperty = BindableProperty.Create(
             propertyName: nameof(ScreenPoints),
             returnType: typeof(Vector2[]),
             declaringType: typeof(ContentPage),
             defaultValue: Array.Empty<Vector2>());
-
-
 
         public object ScreenPoints
         {
