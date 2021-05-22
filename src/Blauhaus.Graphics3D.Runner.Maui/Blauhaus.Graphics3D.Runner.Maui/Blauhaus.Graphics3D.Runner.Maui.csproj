@@ -19,12 +19,13 @@
   <ItemGroup>
     <PackageReference Include="Blauhaus.Analytics.Console" Version="1.6.10" />
     <PackageReference Include="Blauhaus.DeviceServices" Version="1.0.1" />
-    <PackageReference Include="Blauhaus.MVVM.Xamarin" Version="1.3.9" />
+    <PackageReference Include="Blauhaus.MVVM.Xamarin" Version="1.3.10" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.2" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Blauhaus.Graphics3D.Maui.SkiaSharp\Blauhaus.Graphics3D.Maui.SkiaSharp.csproj" />
     <ProjectReference Include="..\..\Blauhaus.Graphics3D\Blauhaus.Graphics3D.csproj" />
   </ItemGroup>
 
