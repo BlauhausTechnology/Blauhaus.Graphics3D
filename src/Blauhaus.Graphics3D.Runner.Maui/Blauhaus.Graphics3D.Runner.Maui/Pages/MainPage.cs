@@ -1,5 +1,4 @@
-﻿using Blauhaus.Graphics3D.Runner.Maui.Pages.Base;
-using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
+﻿using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
 using Blauhaus.MVVM.Xamarin.Views.Content;
 using Xamarin.Forms;
 

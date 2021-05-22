@@ -3,7 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Blauhaus.Graphics3D.Maui.SkiaSharp.Controls;
 using Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base;
-using Blauhaus.Graphics3D.Runner.Maui.Pages.Base;
+using Blauhaus.Graphics3D.Maui.SkiaSharp.Pages;
 using Blauhaus.Graphics3D.Runner.Maui.ViewModels;
 using Blauhaus.MVVM.Xamarin.Converters;
 using SkiaSharp;
