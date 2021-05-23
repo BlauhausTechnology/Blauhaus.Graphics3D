@@ -20,5 +20,15 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Extensions
                 canvas.DrawPath(trianglePath, paint);
             }
         }
+
+        public static void DrawTriangle(this SKCanvas canvas, IReadOnlyList<Vector2> triangleVertices2D, SKPaint paint)
+        {
+            using var trianglePath = new SKPath();
+            trianglePath.MoveTo(triangleVertices2D[0].ToSKPoint());
+            trianglePath.LineTo(triangleVertices2D[1].ToSKPoint());
+            trianglePath.LineTo(triangleVertices2D[2].ToSKPoint());
+            trianglePath.Close();
+            canvas.DrawPath(trianglePath, paint);
+        }
     }
 }

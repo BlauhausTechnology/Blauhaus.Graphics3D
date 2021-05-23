@@ -88,9 +88,9 @@ namespace Blauhaus.Graphics3D
             var canvasCoordinates = new Vector2[worldPoints.Count];
             for (var i = 0; i < worldPoints.Count; i++)
             {
-                var worklPoint = worldPoints[i];
+                var worldPosition = worldPoints[i];
 
-                canvasCoordinates[i] = GetScreenPosition(worklPoint);
+                canvasCoordinates[i] = GetScreenPosition(worldPosition);
             }
 
             return canvasCoordinates;

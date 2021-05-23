@@ -38,7 +38,6 @@ namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
 
         public Vector3 CameraPosition { get; set; }
         public Vector3 CameraLookingAt { get; set; }
-
         public int[] TriangleIndices { get; private set; }
         public Vector3[] TriangleVertices
         {
