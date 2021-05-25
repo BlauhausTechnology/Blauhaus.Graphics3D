@@ -16,12 +16,12 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
         public NakedPyramidPage(NakedPyramidViewModel viewModel) : base(viewModel)
         {
 
-            Canvas.Camera.Position = viewModel.CameraPosition;
-            Canvas.Camera.LookingAt = viewModel.CameraLookingAt;
+            CanvasControl.Camera.Position = viewModel.CameraPosition;
+            CanvasControl.Camera.LookingAt = viewModel.CameraLookingAt;
 
-            Canvas.DrawHandler = canvas =>
+            CanvasControl.DrawHandler = canvas =>
             {
-                var screenPoints = Canvas.Camera.GetScreenCoordinates(ViewModel.TriangleVertices);
+                var screenPoints = CanvasControl.Camera.GetScreenCoordinates(ViewModel.TriangleVertices);
 
                 var paint = new SKPaint
                 {
@@ -34,7 +34,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 canvas.DrawIndexedTriangles(screenPoints, ViewModel.TriangleIndices, paint);
             };
             
-            Content = Canvas;
+            Content = CanvasControl;
 
         }
          

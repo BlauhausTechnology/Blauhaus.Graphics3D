@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Blauhaus.Graphics3D\Blauhaus.Graphics3D.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 </Project>

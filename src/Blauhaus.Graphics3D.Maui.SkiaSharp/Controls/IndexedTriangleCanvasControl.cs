@@ -2,6 +2,7 @@
 using System.Numerics;
 using Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base;
 using Blauhaus.Graphics3D.Maui.SkiaSharp.Extensions;
+using Blauhaus.Graphics3D.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
@@ -11,7 +12,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls
     public class IndexedTriangleCanvasControl : BaseCameraCanvasControl
     {
 
-        public IndexedTriangleCanvasControl()
+        public IndexedTriangleCanvasControl(ICameraViewModel viewModel): base(viewModel)
         {
             DrawHandler = canvas =>
             {

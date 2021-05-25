@@ -53,6 +53,19 @@ namespace Blauhaus.Graphics3D.Tests.Tests.CameraTests
             //Assert
             Assert.That(Sut.Position.X, Is.EqualTo(9f));
         }
+
+        [Test]
+        public void WHEN_zooming_in_SHOULD_not_zoom_further_than_lookat()
+        {
+            //Arrange
+            LookingAt = new Vector3(5, 0, 0);
+
+            //Act
+            Sut.Zoom(new ZoomEvent(0, 0, 4d));
+
+            //Assert
+            Assert.That(Sut.Position.X, Is.EqualTo(float.Epsilon));
+        }
 		
     }
 }

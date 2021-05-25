@@ -52,16 +52,45 @@ namespace Blauhaus.Graphics3D
             _height = height;
             UpdateMatrices();
         }
-         
-        
-        public Vector3 LookingAt { get => _lookingAt; set { _lookingAt = value; UpdateMatrices(); } }
-        public Vector3 Position { get => _position; set { _position = value; UpdateMatrices(); } }
+
+
+        public Vector3 LookingAt
+        {
+            get => _lookingAt;
+            set
+            {
+                if (_lookingAt != value)
+                {
+                    _lookingAt = value;
+                    UpdateMatrices();
+                }
+            }
+        }
+
+        public Vector3 LookDirection => Vector3.Normalize(_lookingAt - _position);
+
+        public Vector3 Position
+        {
+            get => _position;
+            set
+            {
+                if (_position != value)
+                {
+                    _position = value;
+                    UpdateMatrices();
+                }
+            }
+        }
 
         public void Zoom(ZoomEvent zoomEvent)
         {
             var currentCameraDistance = _position.Length() - _lookingAt.Length();
             var changeInDistance = (float) (1f - zoomEvent.Scale) * currentCameraDistance;
             var newCameraDistance = _position.Length() + changeInDistance;
+            if (newCameraDistance <= 0)
+            {
+                newCameraDistance = float.Epsilon;
+            }
             var currentCameraVector = Vector3.Normalize(_position);
             var newCameraPosition = newCameraDistance * currentCameraVector;
             Position = newCameraPosition;
@@ -96,8 +125,6 @@ namespace Blauhaus.Graphics3D
             return canvasCoordinates;
         }
 
-        //todo if (Vector3.Dot(_lookAtVector, triangleNormal) > 0) => cull
-
 
         private void UpdateMatrices()
         { 
@@ -120,9 +147,8 @@ namespace Blauhaus.Graphics3D
 
         private Vector3 GetLookDirection()
         {
-            
-            var lookDirection = Vector3.Normalize(_lookingAt - _position);
-            
+
+            var lookDirection = LookDirection;
             var leftDirection = Vector3.Cross(_upVector, lookDirection); //maybe use for panning
 
             var cameraYaw = Quaternion.CreateFromAxisAngle(-Vector3.UnitZ, _yaw);

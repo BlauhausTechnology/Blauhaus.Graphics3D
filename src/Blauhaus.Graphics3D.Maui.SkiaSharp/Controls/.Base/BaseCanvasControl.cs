@@ -34,7 +34,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
             var surface = e.Surface;
             var canvas = surface.Canvas;
             canvas.Clear();
-
+            
             if (ScreenDimensions.X != info.Width || ScreenDimensions.Y != info.Height)
             {
                 ScreenDimensions = new Vector2(info.Width, info.Height);

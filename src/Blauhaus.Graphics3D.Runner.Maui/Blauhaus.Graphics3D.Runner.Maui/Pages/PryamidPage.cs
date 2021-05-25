@@ -19,9 +19,9 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
         {
             BackgroundColor = Color.Black;
 
-            Canvas.DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions;
+            CanvasControl.DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions;
             
-            Canvas.DrawHandler = canvas =>
+            CanvasControl.DrawHandler = canvas =>
             {
 
                 var paint = new SKPaint {Style = SKPaintStyle.Stroke, StrokeWidth = 1, IsAntialias = true, Color = Color.Red.ToSKColor()};
@@ -37,7 +37,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 }
             };
             
-            Canvas.ZoomHandler = ViewModel.Zoom;
+            CanvasControl.ZoomHandler = ViewModel.Zoom;
 
             var controls = new CanvasControls();
 
@@ -49,7 +49,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 
                 Children =
                 {
-                    Canvas.Row(MainRows.Canvas),
+                    CanvasControl.Row(MainRows.Canvas),
                     controls.Row(MainRows.Controls)
                 }
             };
