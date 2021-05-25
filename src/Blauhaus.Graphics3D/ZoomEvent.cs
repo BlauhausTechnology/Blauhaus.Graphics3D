@@ -4,13 +4,7 @@ namespace Blauhaus.Graphics3D
 {
     
     public readonly struct ZoomEvent
-    {
-        public ZoomEvent(double x, double y, double scale)
-        {
-            Center = new Vector2((float) x, (float) y);
-            Scale = scale;
-        }
-
+    { 
         public ZoomEvent(float x, float y, double scale)
         {
             Center = new Vector2(x, y);

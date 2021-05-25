@@ -42,7 +42,6 @@ namespace Blauhaus.Graphics3D.UWP
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 

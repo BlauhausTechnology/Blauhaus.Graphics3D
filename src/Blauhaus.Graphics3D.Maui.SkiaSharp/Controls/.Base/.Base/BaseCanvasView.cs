@@ -10,26 +10,33 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base
     public abstract class BaseCanvasView: BaseContentView
     {
         protected Vector2 ScreenDimensions;
-        protected PinchGestureRecognizer PinchGestureRecognizer;
+        private readonly PinchGestureRecognizer _pinchGestureRecognizer;
+        private readonly PanGestureRecognizer _panGestureRecognizer;
 
         public Action<Vector2>? DimensionsChangedHandler;
-        public Action<ZoomEvent>? ZoomHandler;
         public Action<SKCanvas>? DrawHandler;
+        public Action<ZoomEvent>? ZoomHandler;
+        public Action<PanEvent>? PanHandler;
 
         protected BaseCanvasView()
         {
-            PinchGestureRecognizer = new PinchGestureRecognizer();
-            GestureRecognizers.Add(PinchGestureRecognizer);
+            _pinchGestureRecognizer = new PinchGestureRecognizer();
+            GestureRecognizers.Add(_pinchGestureRecognizer);
+
+            _panGestureRecognizer = new PanGestureRecognizer();
+            GestureRecognizers.Add(_panGestureRecognizer);
         }
 
         public virtual void HandleAppearing()
         {
-            PinchGestureRecognizer.PinchUpdated += HandlePinch;
+            _pinchGestureRecognizer.PinchUpdated += HandlePinch;
+            _panGestureRecognizer.PanUpdated += HandlePan;
         }
 
         public virtual void HandleDisappearing()
         {
-            PinchGestureRecognizer.PinchUpdated -= HandlePinch;
+            _pinchGestureRecognizer.PinchUpdated -= HandlePinch;
+            _panGestureRecognizer.PanUpdated -= HandlePan;
         }
 
         public abstract void Redraw();
@@ -38,7 +45,19 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base
         {
             if (args.Status == GestureStatus.Running)
             {
-                ZoomHandler?.Invoke(new ZoomEvent(args.ScaleOrigin.X, args.ScaleOrigin.Y, args.Scale));
+                ZoomHandler?.Invoke(new ZoomEvent((float) args.ScaleOrigin.X, (float) args.ScaleOrigin.Y, args.Scale));
+            }
+        }
+        
+        private void HandlePan(object sender, PanUpdatedEventArgs args)
+        {
+            if (args.StatusType == GestureStatus.Running)
+            {
+                var newCenterX = (float)(ScreenDimensions.X / 2f + args.TotalX);
+                var newCenterY = (float)(ScreenDimensions.Y / 2f + args.TotalY);
+                var scaleX = (float)args.TotalX / ScreenDimensions.X;
+                var scaleY = (float)(args.TotalY / ScreenDimensions.Y);
+                PanHandler?.Invoke(new PanEvent(scaleX, scaleY, newCenterX, newCenterY));
             }
         }
 

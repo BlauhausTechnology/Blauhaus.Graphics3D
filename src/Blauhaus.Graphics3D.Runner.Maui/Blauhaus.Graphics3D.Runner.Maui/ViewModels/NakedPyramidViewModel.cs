@@ -1,9 +1,10 @@
 ﻿using System.Numerics;
+using Blauhaus.Graphics3D.ViewModels;
 using Blauhaus.MVVM.Abstractions.ViewModels;
 
 namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
 {
-    public class NakedPyramidViewModel : BaseViewModel
+    public class NakedPyramidViewModel : BaseViewModel, ICameraViewModel
     {
         public NakedPyramidViewModel()
         {
@@ -38,6 +39,8 @@ namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
 
         public Vector3 CameraPosition { get; set; }
         public Vector3 CameraLookingAt { get; set; }
+        public Vector3 CameraLookDirection { get; set; }
+
         public int[] TriangleIndices { get; private set; }
         public Vector3[] TriangleVertices
         {

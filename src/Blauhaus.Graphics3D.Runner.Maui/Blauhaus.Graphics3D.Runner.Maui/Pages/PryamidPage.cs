@@ -123,7 +123,11 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 }.Column(ControlColumns.Rotation));
             }
         }
-         
-         
+
+
+        protected override ScreenPointsCanvasControl ConstructCanvas()
+        {
+            return new(ViewModel);
+        }
     }
 }

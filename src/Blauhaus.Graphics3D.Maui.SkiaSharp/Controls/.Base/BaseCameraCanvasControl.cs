@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
-    public abstract class BaseCameraCanvasControl : BaseCanvasControl
+    public abstract class BaseCameraCanvasControl : BaseGLCanvasControl
     {
         private SKPaint? _debugPaint;
 
@@ -27,9 +27,13 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
                 Redraw();
             };
 
-            
-
+            PanHandler = pan =>
+            {
+                Camera.Pan(pan);
+                Redraw();
+            };
         }
+
         public Camera Camera { get; }
 
         public void DrawCameraInfo(SKCanvas canvas)

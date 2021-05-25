@@ -22,6 +22,7 @@ namespace Blauhaus.Graphics3D
         private float _yaw;
         private float _pitch;
         private float _roll;
+        private float _fieldOfViewAngle;
 
         public Camera(
             float width, float height, 
@@ -36,6 +37,8 @@ namespace Blauhaus.Graphics3D
             _nearclip = nearclip;
             _farClip = farClip;
             
+            _fieldOfViewAngle = (float) (Math.PI / 4f);
+
             //non-traditional Matrix because of different coordinate system
             _worldMatrix = new Matrix4x4(
                 1, 0, 0, 0,
@@ -82,10 +85,11 @@ namespace Blauhaus.Graphics3D
             }
         }
 
+        public float Distance => _position.Length() - _lookingAt.Length();
+
         public void Zoom(ZoomEvent zoomEvent)
-        {
-            var currentCameraDistance = _position.Length() - _lookingAt.Length();
-            var changeInDistance = (float) (1f - zoomEvent.Scale) * currentCameraDistance;
+        { 
+            var changeInDistance = (float) (1f - zoomEvent.Scale) * Distance;
             var newCameraDistance = _position.Length() + changeInDistance;
             if (newCameraDistance <= 0)
             {
@@ -95,7 +99,34 @@ namespace Blauhaus.Graphics3D
             var newCameraPosition = newCameraDistance * currentCameraVector;
             Position = newCameraPosition;
         }
-        
+
+
+        public void Pan(PanEvent panEvent)
+        {
+            var currentWorldScale = _lookingAt == Vector3.Zero ? Distance : Distance / _lookingAt.Length();
+            
+            var left = Vector3.Cross(_upVector, LookDirection);
+            var right = -left;
+            var up = _upVector;
+            var down = -up;
+
+            var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaUp = (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+
+            //kiiiiinda works...
+            Position = new Vector3(
+                Position.X, 
+                Position.Y + deltaRight, 
+                Position.Z - deltaUp);
+
+            LookingAt = new Vector3(
+                LookingAt.X,
+                LookingAt.Y + deltaRight,
+                LookingAt.Z - deltaUp);
+
+
+             UpdateMatrices();
+        }
 
         //hmmmm
         public float Yaw { get => _yaw; set { _yaw = value; UpdateMatrices(); } }
@@ -134,7 +165,7 @@ namespace Blauhaus.Graphics3D
                 cameraUpVector: _upVector);
 
             _projectionMatrix = Matrix4x4.CreatePerspectiveFieldOfView(
-                fieldOfView: (float) (Math.PI / 4f), 
+                fieldOfView: _fieldOfViewAngle, 
                 aspectRatio: _width /_height, 
                 nearPlaneDistance:_nearclip, 
                 farPlaneDistance: _farClip);

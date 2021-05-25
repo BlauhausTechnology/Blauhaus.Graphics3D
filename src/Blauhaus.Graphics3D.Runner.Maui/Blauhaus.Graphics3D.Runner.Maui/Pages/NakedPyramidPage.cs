@@ -32,11 +32,17 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
                 };
 
                 canvas.DrawIndexedTriangles(screenPoints, ViewModel.TriangleIndices, paint);
+
+                CanvasControl.DrawCameraInfo(canvas);
             };
             
             Content = CanvasControl;
 
         }
-         
+
+        protected override CameraCanvasControl ConstructCanvas()
+        {
+            return new (ViewModel);
+        }
     }
 }
