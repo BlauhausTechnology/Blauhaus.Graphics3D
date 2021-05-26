@@ -10,7 +10,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.ViewModels
         {
             
             CameraPosition = new Vector3(10, 0, 0);
-            CameraLookingAt = Vector3.Zero;
+            CameraLookingAt = new Vector3(5, 0, 0);
 
             TriangleVertices = new Vector3[]
             {

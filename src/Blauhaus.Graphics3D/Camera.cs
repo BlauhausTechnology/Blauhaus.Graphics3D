@@ -23,6 +23,8 @@ namespace Blauhaus.Graphics3D
         private float _pitch;
         private float _roll;
         private float _fieldOfViewAngle;
+        private float _rotationAngleRight;
+        private float _rotationAngleUp;
 
         public Camera(
             float width, float height, 
@@ -99,35 +101,77 @@ namespace Blauhaus.Graphics3D
             var newCameraPosition = newCameraDistance * currentCameraVector;
             Position = newCameraPosition;
         }
-
+         
 
         public void Pan(PanEvent panEvent)
         {
-            var currentWorldScale = _lookingAt == Vector3.Zero ? Distance : Distance / _lookingAt.Length();
-            
-            var left = Vector3.Cross(_upVector, LookDirection);
-            var right = -left;
-            var up = _upVector;
-            var down = -up;
-
             var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
-            var deltaUp = (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaUp = - (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
 
             //kiiiiinda works...
             Position = new Vector3(
                 Position.X, 
                 Position.Y + deltaRight, 
-                Position.Z - deltaUp);
+                Position.Z + deltaUp);
 
             LookingAt = new Vector3(
                 LookingAt.X,
                 LookingAt.Y + deltaRight,
-                LookingAt.Z - deltaUp);
-
-
+                LookingAt.Z + deltaUp);
+            
              UpdateMatrices();
         }
 
+        //todo this works!
+        public void RotateAboutCameraLookingAt(PanEvent panEvent)
+        {
+            var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaUp = - (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+            
+            _rotationAngleRight = deltaRight / _fieldOfViewAngle;
+            _rotationAngleUp = deltaUp / _fieldOfViewAngle;
+             
+            Position = Vector3.Transform(Position, Matrix4x4.CreateRotationZ(_rotationAngleRight));
+            Position = Vector3.Transform(Position , Matrix4x4.CreateRotationY(_rotationAngleUp));
+
+            UpdateMatrices();
+        }
+        
+        //todo this works by rotating the whole world  but the camera vectors remain unchanged (not ideal)
+        public void RotateWorld(PanEvent panEvent)
+        {
+            var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaUp = - (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+
+            _rotationAngleRight = deltaRight / _fieldOfViewAngle;
+            _rotationAngleUp = deltaUp / _fieldOfViewAngle;
+
+            _worldMatrix *= Matrix4x4.CreateRotationZ(_rotationAngleRight);
+            _worldMatrix *= Matrix4x4.CreateRotationY(_rotationAngleUp);
+             
+            UpdateMatrices();
+        }
+
+        //todo doesn't work...
+        public void RotateAboutWorldOrigin(PanEvent panEvent)
+        {
+            
+            var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaUp = - (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+
+            _rotationAngleRight = deltaRight / _fieldOfViewAngle;
+            _rotationAngleUp = deltaUp / _fieldOfViewAngle;
+             
+            var cameraAtOrigin = LookDirection * Position.Length();
+            
+            var pos1 = Vector3.Transform(cameraAtOrigin, Matrix4x4.CreateRotationZ(_rotationAngleRight));
+            var pos2 = Vector3.Transform(pos1 , Matrix4x4.CreateRotationY(_rotationAngleUp));
+            var newLookDirection = Vector3.Normalize(pos2);
+            Position = newLookDirection / Position.Length();
+            
+            UpdateMatrices();
+        }
+         
         //hmmmm
         public float Yaw { get => _yaw; set { _yaw = value; UpdateMatrices(); } }
         public float Pitch { get => _pitch; set { _pitch = value; UpdateMatrices(); } }

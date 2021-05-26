@@ -8,10 +8,12 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
     public abstract class BaseCameraCanvasControl : BaseGLCanvasControl
     {
+        private readonly ICameraViewModel _cameraViewModel;
         private SKPaint? _debugPaint;
 
         protected BaseCameraCanvasControl(ICameraViewModel cameraViewModel)
         {
+            _cameraViewModel = cameraViewModel;
             Camera = new Camera(0, 0, Vector3.One, Vector3.Zero, Vector3.UnitZ);
 
             DimensionsChangedHandler = dimensions => Camera.SetDimensions(dimensions.X, dimensions.Y);
@@ -19,19 +21,24 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
             ZoomHandler = zoom =>
             {
                 Camera.Zoom(zoom);
-
-                cameraViewModel.CameraLookingAt = Camera.LookingAt;
-                cameraViewModel.CameraPosition = Camera.Position;
-                cameraViewModel.CameraLookDirection = Camera.LookDirection;
-
+                UpdateViewModel();
                 Redraw();
             };
 
             PanHandler = pan =>
             {
-                Camera.Pan(pan);
+                Camera.RotateAboutWorldOrigin(pan);
+                //Camera.RotateAboutCameraLookingAt(pan);
+                UpdateViewModel();
                 Redraw();
             };
+        }
+
+        private void UpdateViewModel()
+        {
+            _cameraViewModel.CameraLookingAt = Camera.LookingAt;
+            _cameraViewModel.CameraPosition = Camera.Position;
+            _cameraViewModel.CameraLookDirection = Camera.LookDirection;
         }
 
         public Camera Camera { get; }
