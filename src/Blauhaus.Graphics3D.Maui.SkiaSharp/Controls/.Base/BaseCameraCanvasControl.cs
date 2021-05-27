@@ -27,7 +27,8 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 
             PanHandler = pan =>
             {
-                Camera.RotateAboutWorldOrigin(pan);
+                //Camera.RotateAboutWorldOrigin(pan);
+                Camera.RotateWorld(pan);
                 //Camera.RotateAboutCameraLookingAt(pan);
                 UpdateViewModel();
                 Redraw();

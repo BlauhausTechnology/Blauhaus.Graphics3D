@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Numerics;
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 
@@ -87,11 +88,12 @@ namespace Blauhaus.Graphics3D
             }
         }
 
-        public float Distance => _position.Length() - _lookingAt.Length();
+        public float DistanceToTarget => _position.Length() - _lookingAt.Length();
+        public float DistanceToOrigin => _position.Length();
 
         public void Zoom(ZoomEvent zoomEvent)
         { 
-            var changeInDistance = (float) (1f - zoomEvent.Scale) * Distance;
+            var changeInDistance = (float) (1f - zoomEvent.Scale) * DistanceToTarget;
             var newCameraDistance = _position.Length() + changeInDistance;
             if (newCameraDistance <= 0)
             {
@@ -126,13 +128,14 @@ namespace Blauhaus.Graphics3D
         public void RotateAboutCameraLookingAt(PanEvent panEvent)
         {
             var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
-            var deltaUp = - (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaUp =  (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
             
-            _rotationAngleRight = deltaRight / _fieldOfViewAngle;
-            _rotationAngleUp = deltaUp / _fieldOfViewAngle;
+            _rotationAngleRight = deltaRight;// / _fieldOfViewAngle;
+            _rotationAngleUp = deltaUp;// / _fieldOfViewAngle;
              
-            Position = Vector3.Transform(Position, Matrix4x4.CreateRotationZ(_rotationAngleRight));
-            Position = Vector3.Transform(Position , Matrix4x4.CreateRotationY(_rotationAngleUp));
+            Position = Vector3.Transform(Position, 
+                Matrix4x4.CreateRotationZ(_rotationAngleRight) *
+                Matrix4x4.CreateRotationY(_rotationAngleUp));
 
             UpdateMatrices();
         }
@@ -140,8 +143,8 @@ namespace Blauhaus.Graphics3D
         //todo this works by rotating the whole world  but the camera vectors remain unchanged (not ideal)
         public void RotateWorld(PanEvent panEvent)
         {
-            var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
-            var deltaUp = - (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaRight = -(float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
+            var deltaUp = (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
 
             _rotationAngleRight = deltaRight / _fieldOfViewAngle;
             _rotationAngleUp = deltaUp / _fieldOfViewAngle;
@@ -157,17 +160,21 @@ namespace Blauhaus.Graphics3D
         {
             
             var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
-            var deltaUp = - (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
-
+            var deltaUp = - (float) (panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
+            
             _rotationAngleRight = deltaRight / _fieldOfViewAngle;
             _rotationAngleUp = deltaUp / _fieldOfViewAngle;
-             
-            var cameraAtOrigin = LookDirection * Position.Length();
-            
-            var pos1 = Vector3.Transform(cameraAtOrigin, Matrix4x4.CreateRotationZ(_rotationAngleRight));
-            var pos2 = Vector3.Transform(pos1 , Matrix4x4.CreateRotationY(_rotationAngleUp));
-            var newLookDirection = Vector3.Normalize(pos2);
-            Position = newLookDirection / Position.Length();
+
+            var rotateAround = LookDirection;
+            var length = DistanceToOrigin;
+
+            var pitch = Quaternion.CreateFromAxisAngle(Vector3.UnitY, _rotationAngleUp);
+            var yaw = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, _rotationAngleRight);
+            var rotation = Matrix4x4.CreateFromQuaternion(pitch * yaw);
+
+            var newLookAt = Vector3.Transform(rotateAround, rotation);
+            var newPosition = newLookAt * length;
+            Position = newPosition;
             
             UpdateMatrices();
         }
