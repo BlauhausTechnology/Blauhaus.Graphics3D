@@ -14,7 +14,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls
 
         public IndexedTriangleCanvasControl(ICameraViewModel viewModel): base(viewModel)
         {
-            DrawHandler = canvas =>
+            DrawHandler = (canvas, screen) =>
             {
                 var screenPoints = Camera.GetScreenCoordinates(Vertices);
 

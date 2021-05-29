@@ -41,7 +41,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
                 DimensionsChangedHandler?.Invoke(ScreenDimensions);
             }
 
-            DrawHandler?.Invoke(canvas);
+            DrawHandler?.Invoke(canvas, ScreenDimensions);
             _isDrawing = false;
         }
         

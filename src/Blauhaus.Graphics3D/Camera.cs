@@ -130,8 +130,9 @@ namespace Blauhaus.Graphics3D
             var deltaRight = (float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
             var deltaUp =  (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
             
-            _rotationAngleRight = deltaRight;// / _fieldOfViewAngle;
-            _rotationAngleUp = deltaUp;// / _fieldOfViewAngle;
+            var scale = (Position.Length() - LookingAt.Length()) / Position.Length();
+            _rotationAngleRight = deltaRight * scale;
+            _rotationAngleUp = deltaUp * scale;
              
             Position = Vector3.Transform(Position, 
                 Matrix4x4.CreateRotationZ(_rotationAngleRight) *
@@ -146,8 +147,10 @@ namespace Blauhaus.Graphics3D
             var deltaRight = -(float) (panEvent.Scale.X * Math.Tan(_fieldOfViewAngle / 2));
             var deltaUp = (float)(panEvent.Scale.Y * Math.Tan(_fieldOfViewAngle / 2));
 
-            _rotationAngleRight = deltaRight / _fieldOfViewAngle;
-            _rotationAngleUp = deltaUp / _fieldOfViewAngle;
+            var scale = (Position.Length() - LookingAt.Length()) / Position.Length();
+
+            _rotationAngleRight = deltaRight * scale;// / _fieldOfViewAngle;
+            _rotationAngleUp = deltaUp * scale;// / _fieldOfViewAngle;
 
             _worldMatrix *= Matrix4x4.CreateRotationZ(_rotationAngleRight);
             _worldMatrix *= Matrix4x4.CreateRotationY(_rotationAngleUp);

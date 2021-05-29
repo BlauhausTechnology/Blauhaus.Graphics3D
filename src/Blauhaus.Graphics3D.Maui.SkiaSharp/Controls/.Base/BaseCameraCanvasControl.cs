@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using Blauhaus.Graphics3D.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
@@ -6,10 +7,13 @@ using Xamarin.Forms;
 
 namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
+    public enum PanAction{RotateWorld, RotateCameraAroundTarget}
+    
     public abstract class BaseCameraCanvasControl : BaseGLCanvasControl
     {
         private readonly ICameraViewModel _cameraViewModel;
         private SKPaint? _debugPaint;
+        public PanAction PanAction;
 
         protected BaseCameraCanvasControl(ICameraViewModel cameraViewModel)
         {
@@ -27,9 +31,18 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 
             PanHandler = pan =>
             {
-                //Camera.RotateAboutWorldOrigin(pan);
-                Camera.RotateWorld(pan);
-                //Camera.RotateAboutCameraLookingAt(pan);
+                switch (PanAction)
+                {
+                    case PanAction.RotateWorld:
+                        Camera.RotateWorld(pan);
+                        break;
+                    case PanAction.RotateCameraAroundTarget:
+                        Camera.RotateAboutCameraLookingAt(pan);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
                 UpdateViewModel();
                 Redraw();
             };

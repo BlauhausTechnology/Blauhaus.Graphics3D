@@ -14,7 +14,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base.Base
         private readonly PanGestureRecognizer _panGestureRecognizer;
 
         public Action<Vector2>? DimensionsChangedHandler;
-        public Action<SKCanvas>? DrawHandler;
+        public Action<SKCanvas, Vector2>? DrawHandler;
         public Action<ZoomEvent>? ZoomHandler;
         public Action<PanEvent>? PanHandler;
 

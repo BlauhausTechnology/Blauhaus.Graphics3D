@@ -30,5 +30,6 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Extensions
             trianglePath.Close();
             canvas.DrawPath(trianglePath, paint);
         }
+         
     }
 }
