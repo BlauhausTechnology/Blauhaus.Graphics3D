@@ -8,7 +8,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Extensions
     {
         public static SKPoint ToSKPoint(this Vector2 vector2)
         {
-            return new(vector2.X, vector2.Y);
+            return new SKPoint(vector2.X, vector2.Y);
         }
     }
 }

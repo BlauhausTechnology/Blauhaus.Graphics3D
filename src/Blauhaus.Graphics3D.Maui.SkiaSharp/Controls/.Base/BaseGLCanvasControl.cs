@@ -10,7 +10,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
     public abstract class BaseGLCanvasControl : BaseCanvasView
     {
-        private readonly SKGLView _canvasView = new();
+        private readonly SKGLView _canvasView = new SKGLView();
 
         protected BaseGLCanvasControl()
         {

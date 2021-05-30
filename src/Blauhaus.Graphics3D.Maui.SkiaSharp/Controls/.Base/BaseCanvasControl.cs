@@ -10,7 +10,7 @@ namespace Blauhaus.Graphics3D.Maui.SkiaSharp.Controls.Base
 {
     public abstract class BaseCanvasControl : BaseCanvasView
     {
-        private readonly SKCanvasView _canvasView = new();
+        private readonly SKCanvasView _canvasView = new SKCanvasView();
         private bool _isDrawing;
 
         protected BaseCanvasControl() 
