@@ -35,7 +35,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
             };
 
 
-            CanvasControl.DrawHandler = canvas =>
+            CanvasControl.DrawHandler = (canvas, screen) =>
             {
                 var screenPoints = CanvasControl.Camera.GetScreenCoordinates(ViewModel.TriangleVertices);
 

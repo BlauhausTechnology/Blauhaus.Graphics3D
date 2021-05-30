@@ -21,7 +21,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui.Pages
 
             CanvasControl.DimensionsChangedHandler = dimensions => ViewModel.ScreenDimensions = dimensions;
             
-            CanvasControl.DrawHandler = canvas =>
+            CanvasControl.DrawHandler = (canvas, screen) =>
             {
 
                 var paint = new SKPaint {Style = SKPaintStyle.Stroke, StrokeWidth = 1, IsAntialias = true, Color = Color.Red.ToSKColor()};
