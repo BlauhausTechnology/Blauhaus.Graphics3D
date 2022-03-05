@@ -148,7 +148,7 @@
       <Version>1.0.16</Version>
     </PackageReference>
     <PackageReference Include="Blauhaus.MVVM.Xamarin">
-      <Version>1.4.8</Version>
+      <Version>1.4.10</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.Views.Forms">
       <Version>2.80.3</Version>
