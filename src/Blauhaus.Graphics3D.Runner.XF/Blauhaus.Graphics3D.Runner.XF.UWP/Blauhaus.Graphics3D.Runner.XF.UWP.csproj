@@ -148,7 +148,7 @@
       <Version>1.1.12</Version>
     </PackageReference>
     <PackageReference Include="Blauhaus.MVVM.Xamarin">
-      <Version>2.1.1</Version>
+      <Version>2.1.2</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.Views.Forms">
       <Version>2.88.0</Version>
@@ -157,17 +157,17 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Blauhaus.Graphics3D.Maui.SkiaSharp\Blauhaus.Graphics3D.Maui.SkiaSharp.csproj">
+    <ProjectReference Include="..\..\Blauhaus.Graphics3D.XF.SkiaSharp\Blauhaus.Graphics3D.XF.SkiaSharp.csproj">
       <Project>{9804f2db-40e7-4577-b49e-1e9a4c4e452e}</Project>
-      <Name>Blauhaus.Graphics3D.Maui.SkiaSharp</Name>
+      <Name>Blauhaus.Graphics3D.XF.SkiaSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Blauhaus.Graphics3D\Blauhaus.Graphics3D.csproj">
       <Project>{23c7a411-8d1a-4fa0-a812-9f120f5068c6}</Project>
       <Name>Blauhaus.Graphics3D</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Blauhaus.Graphics3D.Runner.Maui\Blauhaus.Graphics3D.Runner.Maui.csproj">
-      <Project>{878d42a9-73ea-43b6-abf4-94c94b28d980}</Project>
-      <Name>Blauhaus.Graphics3D.Runner.Maui</Name>
+    <ProjectReference Include="..\Blauhaus.Graphics3D.Runner.XF\Blauhaus.Graphics3D.Runner.XF.csproj">
+      <Project>{E4C7F20A-7658-42CC-99F4-3EB18A9BE573}</Project>
+      <Name>Blauhaus.Graphics3D.Runner.XF</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

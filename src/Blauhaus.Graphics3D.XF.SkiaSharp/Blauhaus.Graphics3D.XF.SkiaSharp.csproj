@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.MVVM.Xamarin" Version="2.1.1" />
+    <PackageReference Include="Blauhaus.MVVM.Xamarin" Version="2.1.2" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.0" />
   </ItemGroup>
 
