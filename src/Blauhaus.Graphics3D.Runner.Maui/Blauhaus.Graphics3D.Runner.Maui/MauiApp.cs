@@ -1,4 +1,5 @@
 ﻿using Blauhaus.Analytics.Console.Ioc;
+using Blauhaus.Analytics.Serilog.Ioc;
 using Blauhaus.Common.ValueObjects.BuildConfigs;
 using Blauhaus.DeviceServices.Common.Ioc;
 using Blauhaus.Graphics3D.Runner.Maui.Pages;
@@ -22,6 +23,7 @@ namespace Blauhaus.Graphics3D.Runner.Maui
             services
                 .AddMvvmServices()
                 .AddDeviceServices()
+                .AddSerilogAnalytics("3d", p => {})
                 .RegisterConsoleLoggerClientService();
                 
             services

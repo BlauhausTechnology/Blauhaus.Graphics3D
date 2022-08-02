@@ -13,11 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Analytics.Console" Version="1.8.40" />
-    <PackageReference Include="Blauhaus.DeviceServices" Version="1.1.4" />
-    <PackageReference Include="Blauhaus.MVVM.Xamarin" Version="1.5.7" />
-    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.3" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <PackageReference Include="Blauhaus.Analytics.Console" Version="1.8.46" />
+    <PackageReference Include="Blauhaus.Analytics.Serilog" Version="1.8.46" />
+    <PackageReference Include="Blauhaus.DeviceServices" Version="1.1.12" />
+    <PackageReference Include="Blauhaus.MVVM.Xamarin" Version="2.1.1" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
   </ItemGroup>
 
   <ItemGroup>
