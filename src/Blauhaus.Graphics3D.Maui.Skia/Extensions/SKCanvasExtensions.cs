@@ -3,7 +3,7 @@
 using System.Numerics;
 using SkiaSharp;
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Extensions
+namespace Blauhaus.Graphics3D.Maui.Skia.Extensions
 {
     public static class SKCanvasExtensions
     {

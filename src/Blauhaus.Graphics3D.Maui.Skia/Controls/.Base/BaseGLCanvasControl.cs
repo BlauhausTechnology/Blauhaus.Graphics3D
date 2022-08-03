@@ -1,11 +1,11 @@
 ﻿// ReSharper disable InconsistentNaming
 
 using System.Numerics;
-using Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base.Base;
+using Blauhaus.Graphics3D.Maui.Skia.Controls.Base.Base;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base
+namespace Blauhaus.Graphics3D.Maui.Skia.Controls.Base
 {
     public abstract class BaseGLCanvasControl : BaseCanvasView
     {

@@ -1,10 +1,10 @@
-﻿using Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base.Base;
+﻿using Blauhaus.Graphics3D.Maui.Skia.Controls.Base.Base;
 using Blauhaus.MVVM.Abstractions.ViewModels;
 using Blauhaus.MVVM.Maui.Views;
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Pages
+namespace Blauhaus.Graphics3D.Maui.Skia.Pages
 {
-    public abstract class BaseGraphics3DPage<TViewModel, TCanvas> : BaseMauiContentPage<TViewModel> where TCanvas : BaseCanvasView where TViewModel : IViewModel
+    public abstract class BaseGraphics3DPage<TViewModel, TCanvas> : BaseUpdateContentPage<TViewModel> where TCanvas : BaseCanvasView where TViewModel : IViewModel
     {
         protected TCanvas CanvasControl { get; }
 

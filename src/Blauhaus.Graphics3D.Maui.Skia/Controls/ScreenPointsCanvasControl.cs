@@ -1,10 +1,8 @@
-﻿using System.Numerics;
-using Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base;
-using Blauhaus.MVVM.Abstractions.ViewModels;
+﻿using Blauhaus.Graphics3D.Maui.Skia.Controls.Base;
 
 // ReSharper disable StaticMemberInGenericType
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Controls
+namespace Blauhaus.Graphics3D.Maui.Skia.Controls
 {
     public class ScreenPointsCanvasControl : BaseCanvasControl
     {

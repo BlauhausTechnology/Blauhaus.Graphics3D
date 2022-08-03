@@ -2,7 +2,7 @@
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base.Base
+namespace Blauhaus.Graphics3D.Maui.Skia.Controls.Base.Base
 {
     public abstract class BaseCanvasView: ContentView
     {

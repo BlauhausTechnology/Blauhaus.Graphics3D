@@ -3,7 +3,7 @@ using Blauhaus.Graphics3D.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base
+namespace Blauhaus.Graphics3D.Maui.Skia.Controls.Base
 {
     public enum PanAction{RotateWorld, RotateCameraAroundTarget}
     

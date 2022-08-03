@@ -1,7 +1,7 @@
-﻿using Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base;
+﻿using Blauhaus.Graphics3D.Maui.Skia.Controls.Base;
 using Blauhaus.Graphics3D.ViewModels;
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Controls
+namespace Blauhaus.Graphics3D.Maui.Skia.Controls
 {
     public class CameraCanvasControl : BaseCameraCanvasControl
     {

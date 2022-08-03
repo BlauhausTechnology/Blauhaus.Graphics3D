@@ -1,11 +1,11 @@
 ﻿using System.Numerics;
-using Blauhaus.Graphics3D.Maui.Skia.Copy.Controls.Base;
-using Blauhaus.Graphics3D.Maui.Skia.Copy.Extensions;
+using Blauhaus.Graphics3D.Maui.Skia.Controls.Base;
+using Blauhaus.Graphics3D.Maui.Skia.Extensions;
 using Blauhaus.Graphics3D.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Controls
+namespace Blauhaus.Graphics3D.Maui.Skia.Controls
 {
     public class IndexedTriangleCanvasControl : BaseCameraCanvasControl
     {

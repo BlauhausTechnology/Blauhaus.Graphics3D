@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
-using Blauhaus.Graphics3D.Maui.Skia.Copy.Controls;
-using Blauhaus.Graphics3D.Maui.Skia.Copy.Extensions;
-using Blauhaus.Graphics3D.Maui.Skia.Copy.Pages;
+using Blauhaus.Graphics3D.Maui.Skia.Controls;
+using Blauhaus.Graphics3D.Maui.Skia.Extensions;
+using Blauhaus.Graphics3D.Maui.Skia.Pages;
 using Blauhaus.Graphics3D.TestApp.ViewModels;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
@@ -49,8 +49,8 @@ public class NakedPyramidView : BaseGraphics3DPage<NakedPyramidViewModel, Camera
 
     }
 
-    protected override Maui.Skia.Copy.Controls.CameraCanvasControl ConstructCanvas()
+    protected override CameraCanvasControl ConstructCanvas()
     {
-        return new Maui.Skia.Copy.Controls.CameraCanvasControl(ViewModel);
+        return new CameraCanvasControl(ViewModel);
     }
 }

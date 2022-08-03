@@ -3,7 +3,7 @@ using SkiaSharp;
 
 // ReSharper disable InconsistentNaming
 
-namespace Blauhaus.Graphics3D.Maui.Skia.Copy.Extensions
+namespace Blauhaus.Graphics3D.Maui.Skia.Extensions
 {
     public static class Vector2Extensions
     {
