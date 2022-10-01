@@ -49,9 +49,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Blauhaus.Analytics.Serilog" Version="1.8.46" />
-	  <PackageReference Include="Blauhaus.MVVM.Maui" Version="2.1.2" />
-	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.0" />
+	  <PackageReference Include="Blauhaus.Analytics.Serilog" Version="1.9.11" />
+	  <PackageReference Include="Blauhaus.MVVM.Maui" Version="2.1.10" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.2" />
 	</ItemGroup>
 
 	<ItemGroup>
